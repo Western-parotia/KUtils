@@ -1,10 +1,14 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.content.Context
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleEventObserver
+import com.foundation.service.utils.ext.doOnCreated
+import com.foundation.service.utils.ext.doOnDestroyed
+import com.foundation.service.utils.ext.doOnNextResumed
+import com.foundation.service.utils.ext.doOnResumed
 
 /**
  * create by zhusw on 6/9/21 18:29

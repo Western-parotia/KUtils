@@ -3,7 +3,7 @@ package com.foundation.service.utils
 import android.app.Activity
 import android.os.Build
 import android.view.View
-import com.foundation.service.utils.ext.dp
+import com.foundation.service.utils.ext.global.dp
 
 /**
  * Created by victor on 2018/3/14.

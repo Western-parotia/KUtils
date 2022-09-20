@@ -1,4 +1,4 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.global
 
 import android.os.Handler
 import android.os.Looper

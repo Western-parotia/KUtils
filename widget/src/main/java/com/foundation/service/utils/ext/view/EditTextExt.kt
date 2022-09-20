@@ -1,10 +1,11 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import com.foundation.service.utils.ext.global.toSafeDouble
 
 /**
  * 不会崩溃

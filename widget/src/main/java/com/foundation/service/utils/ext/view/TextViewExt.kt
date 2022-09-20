@@ -1,4 +1,4 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -13,6 +13,8 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.foundation.service.utils.ext.global.getOrNull
+import com.foundation.service.utils.ext.global.removeIfIterator
 import com.foundation.widget.utils.R
 
 /**

@@ -1,4 +1,4 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.global
 
 /**
  * 安全的遍历删除

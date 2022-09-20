@@ -3,7 +3,7 @@ package com.foundation.service.utils
 import android.net.Uri
 import androidx.collection.ArraySet
 import androidx.core.net.toUri
-import com.foundation.service.utils.ext.removeIfIterator
+import com.foundation.service.utils.ext.global.removeIfIterator
 
 /**
  * uri拼接相关操作

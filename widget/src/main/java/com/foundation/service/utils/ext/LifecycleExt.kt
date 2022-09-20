@@ -4,6 +4,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.foundation.service.utils.ext.global.postMain
 
 /**
  * @param ignoreBefore 监听会把之前的都发一遍，所以加此变量

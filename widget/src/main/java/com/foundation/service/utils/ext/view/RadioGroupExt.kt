@@ -1,4 +1,4 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.widget.RadioButton
 import com.foundation.widget.rg.MjRadioGroup

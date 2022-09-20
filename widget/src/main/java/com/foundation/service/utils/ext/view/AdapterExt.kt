@@ -1,4 +1,4 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter

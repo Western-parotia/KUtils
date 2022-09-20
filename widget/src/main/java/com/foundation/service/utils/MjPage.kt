@@ -1,8 +1,8 @@
 package com.foundation.service.utils
 
 import androidx.annotation.IntRange
-import com.foundation.service.utils.ext.postMain
-import com.foundation.service.utils.ext.removeGlobalRunnable
+import com.foundation.service.utils.ext.global.postMain
+import com.foundation.service.utils.ext.global.removeGlobalRunnable
 import java.io.Serializable
 
 /**

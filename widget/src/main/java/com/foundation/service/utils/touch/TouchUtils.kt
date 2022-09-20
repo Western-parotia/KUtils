@@ -8,7 +8,7 @@ import androidx.annotation.IntRange
 import androidx.core.view.ScrollingView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.foundation.service.utils.ext.dp
+import com.foundation.service.utils.ext.global.dp
 
 object TouchUtils {
     /**

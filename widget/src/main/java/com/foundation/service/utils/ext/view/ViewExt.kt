@@ -1,6 +1,6 @@
 @file:Suppress("unused")//未使用的检查
 
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.foundation.service.utils.MjKeyboardUtils
 import com.foundation.service.utils.MjUtils
+import com.foundation.service.utils.ext.global.dp
 import com.foundation.service.utils.touch.TouchUtils
 import com.google.android.flexbox.FlexboxLayoutManager
 

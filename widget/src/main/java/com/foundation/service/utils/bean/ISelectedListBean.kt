@@ -1,8 +1,8 @@
 package com.foundation.service.utils.bean
 
 import androidx.annotation.IntRange
-import com.foundation.service.utils.ext.allTrue
-import com.foundation.service.utils.ext.removeIfReverseSequence
+import com.foundation.service.utils.ext.global.allTrue
+import com.foundation.service.utils.ext.global.removeIfReverseSequence
 
 /**
  * 基于后端服务器返回，继承即可

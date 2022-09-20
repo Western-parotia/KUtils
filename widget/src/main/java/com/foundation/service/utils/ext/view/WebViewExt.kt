@@ -1,10 +1,11 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.lifecycle.LifecycleOwner
 import com.foundation.service.utils.MjUtils
+import com.foundation.service.utils.ext.doOnDestroyed
 import com.google.gson.JsonPrimitive
 
 /**

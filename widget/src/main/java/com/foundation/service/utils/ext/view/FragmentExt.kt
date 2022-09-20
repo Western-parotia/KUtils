@@ -1,6 +1,10 @@
-package com.foundation.service.utils.ext
+package com.foundation.service.utils.ext.view
 
 import androidx.fragment.app.Fragment
+import com.foundation.service.utils.ext.doOnCreated
+import com.foundation.service.utils.ext.doOnDestroyed
+import com.foundation.service.utils.ext.doOnNextResumed
+import com.foundation.service.utils.ext.doOnResumed
 
 /**
  * create之后执行，只执行一次
