@@ -22,6 +22,21 @@ fun BaseQuickAdapter<*, *>.dispatchItemChildClick(
     )
 }
 
+fun BaseQuickAdapter<*, *>.dispatchItemChildLongClick(
+    view: View,
+    holder: ViewBindingViewHolder<*>,
+    tag: String
+) {
+    view.setTag(R.id.tag_adapter_view_holder, holder)
+    view.setTag(R.id.tag_adapter_child_view_long_click, tag)
+    onItemChildLongClickListener?.onItemChildLongClick(
+        holder.bindingAdapter as? BaseQuickAdapter<*, *>,
+        view,
+        holder.getListPosition()
+    )
+}
+
+
 /**
  * 点击事件也不写了
  */
@@ -41,6 +56,24 @@ fun BaseQuickAdapter<*, *>.setItemChildTagClick(
     }
 }
 
+
+fun BaseQuickAdapter<*, *>.setItemChildTagLongClick(
+    view: View,
+    holder: ViewBindingViewHolder<*>,
+    tag: String
+) {
+    view.setTag(R.id.tag_adapter_view_holder, holder)
+    view.setTag(R.id.tag_adapter_child_view_long_click, tag)
+    view.setOnLongClickListener {
+        onItemChildLongClickListener?.onItemChildLongClick(
+            holder.bindingAdapter as? BaseQuickAdapter<*, *>,
+            view,
+            holder.getListPosition()
+        )
+        return@setOnLongClickListener true
+    }
+}
+
 /**
  * 配合上面，tag回调
  */
@@ -53,6 +86,19 @@ fun BaseQuickAdapter<*, *>.setOnItemChildClickWithTagListener(
             view.getTag(R.id.tag_adapter_view_holder) as ViewBindingViewHolder<*>,
             view.getTag(R.id.tag_adapter_child_view_click) as String
         )
+    }
+}
+
+fun BaseQuickAdapter<*, *>.setOnItemChildLongClickWithTagListener(
+    listener: (View, holder: ViewBindingViewHolder<*>, tag: String) -> Unit
+) {
+    setOnItemChildLongClickListener { _, view, _ ->
+        listener(
+            view,
+            view.getTag(R.id.tag_adapter_view_holder) as ViewBindingViewHolder<*>,
+            view.getTag(R.id.tag_adapter_child_view_long_click) as String
+        )
+        true
     }
 }
 

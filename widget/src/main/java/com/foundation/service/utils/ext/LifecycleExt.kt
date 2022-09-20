@@ -65,16 +65,35 @@ fun Lifecycle.doOnCreated(callback: Runnable): LifecycleEventObserver? {
 }
 
 /**
- * 下一次resume时自行，只执行一次
- * @param ignoreBefore 监听会把之前的都发一遍，所以加此变量
- *                      false：默认效果，如果resume过会立即收到
- *                      true：等下一次resume
+ * 执行在resume时（如果已经resume过会立即执行）
  */
 fun Lifecycle.doOnResumed(
-    ignoreBefore: Boolean = false,
     callback: Runnable
 ): LifecycleEventObserver {
-    return addObserver(ignoreBefore) { thisObs, _, event ->
+    return addObserver(false) { thisObs, _, event ->
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> {
+                //回调是在resume之前，所以要post一下
+                postMain(run = callback)
+                removeObserver(thisObs)
+            }
+            Lifecycle.Event.ON_DESTROY -> {
+                removeObserver(thisObs)
+            }
+            else -> {
+                //暂时没逻辑
+            }
+        }
+    }
+}
+
+/**
+ * 执行在下一次resume后（忽略之前的resume）
+ */
+fun Lifecycle.doOnNextResumed(
+    callback: Runnable
+): LifecycleEventObserver {
+    return addObserver(true) { thisObs, _, event ->
         when (event) {
             Lifecycle.Event.ON_RESUME -> {
                 //回调是在resume之前，所以要post一下

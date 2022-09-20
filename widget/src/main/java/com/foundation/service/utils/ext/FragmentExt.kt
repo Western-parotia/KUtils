@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
  */
 fun Fragment.doOnCreated(callback: Runnable) {
     //view的viewLifecycleOwner可能没有初始化，所以先等resume再调用
-    lifecycle.doOnResumed(false) {
+    lifecycle.doOnResumed {
         if (view != null) {
             viewLifecycleOwner.lifecycle.doOnCreated(callback)
         }
@@ -20,20 +20,26 @@ fun Fragment.doOnCreated(callback: Runnable) {
  *                      false：默认效果，如果resume过会立即收到
  *                      true：等下一次resume
  */
-fun Fragment.doOnResumed(
-    ignoreBefore: Boolean = false,
-    callback: Runnable
-) {
+fun Fragment.doOnResumed(callback: Runnable) {
     //view的viewLifecycleOwner可能没有初始化，所以先等resume再调用
-    lifecycle.doOnResumed(false) {
+    lifecycle.doOnResumed {
         if (view != null) {
-            viewLifecycleOwner.lifecycle.doOnResumed(ignoreBefore, callback)
+            viewLifecycleOwner.lifecycle.doOnResumed(callback)
+        }
+    }
+}
+
+fun Fragment.doOnNextResumed(callback: Runnable) {
+    //view的viewLifecycleOwner可能没有初始化，所以先等resume再调用
+    lifecycle.doOnResumed {
+        if (view != null) {
+            viewLifecycleOwner.lifecycle.doOnNextResumed(callback)
         }
     }
 }
 
 fun Fragment.doOnDestroyed(callback: Runnable) {
-    lifecycle.doOnResumed(false) {
+    lifecycle.doOnResumed {
         if (view != null) {
             viewLifecycleOwner.lifecycle.doOnDestroyed(callback)
         }

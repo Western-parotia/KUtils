@@ -36,16 +36,17 @@ fun ComponentActivity.doOnCreated(callback: Runnable): LifecycleEventObserver? {
 }
 
 /**
- * 下一次resume时自行，只执行一次
- * @param ignoreBefore 监听会把之前的都发一遍，所以加此变量
- *                      false：默认效果，如果resume过会立即收到
- *                      true：等下一次resume
+ * 执行在resume时（如果已经resume过会立即执行）
  */
-fun ComponentActivity.doOnResumed(
-    ignoreBefore: Boolean = false,
-    callback: Runnable
-): LifecycleEventObserver {
-    return lifecycle.doOnResumed(ignoreBefore, callback)
+fun ComponentActivity.doOnResumed(callback: Runnable): LifecycleEventObserver {
+    return lifecycle.doOnResumed(callback)
+}
+
+/**
+ * 执行在下一次resume后（忽略之前的resume）
+ */
+fun ComponentActivity.doOnNextResumed(callback: Runnable): LifecycleEventObserver {
+    return lifecycle.doOnNextResumed(callback)
 }
 
 fun ComponentActivity.doOnDestroyed(callback: Runnable): LifecycleEventObserver? {

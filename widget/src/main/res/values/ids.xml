@@ -3,6 +3,7 @@
     <item name="tag_keyboard_tree_listener" type="id" />
     <!--adapter child click 时加tag-->
     <item name="tag_adapter_child_view_click" type="id" />
+    <item name="tag_adapter_child_view_long_click" type="id" />
     <!--viewHolder的tag-->
     <item name="tag_adapter_view_holder" type="id" />
     <!--RecyclerView不支持点击，这里存点击的拓展，见RecyclerViewExt类-->
