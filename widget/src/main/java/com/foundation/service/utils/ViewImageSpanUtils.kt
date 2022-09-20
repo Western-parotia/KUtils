@@ -3,9 +3,9 @@ package com.foundation.service.utils
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import com.foundation.service.utils.ext.FrameLayoutLayoutParams
-import com.foundation.service.utils.ext.getSpannableSpace
-import com.foundation.service.utils.ext.postLifecycle
+import com.foundation.service.utils.ext.view.FrameLayoutLayoutParams
+import com.foundation.service.utils.ext.view.getSpannableSpace
+import com.foundation.service.utils.ext.view.postLifecycle
 
 object ViewImageSpanUtils {
     /**
