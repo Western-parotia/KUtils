@@ -1,0 +1,12 @@
+<resources>
+    <!--键盘监听-->
+    <item name="tag_keyboard_tree_listener" type="id" />
+    <!--adapter child click 时加tag-->
+    <item name="tag_adapter_child_view_click" type="id" />
+    <!--viewHolder的tag-->
+    <item name="tag_adapter_view_holder" type="id" />
+    <!--RecyclerView不支持点击，这里存点击的拓展，见RecyclerViewExt类-->
+    <item name="tag_rv_click" type="id" />
+    <!--textChanged回调（主要用于adapter）-->
+    <item name="tag_text_changed_listener" type="id" />
+</resources>
