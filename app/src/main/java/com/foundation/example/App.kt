@@ -2,7 +2,7 @@ package com.foundation.example
 
 import android.app.Application
 import android.widget.Toast
-import com.foundation.service.utils.MjUtils
+import com.foundation.widget.utils.MjUtils
 
 /**
  * @作者 王能

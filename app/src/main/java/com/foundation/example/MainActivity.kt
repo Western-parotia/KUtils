@@ -2,7 +2,7 @@ package com.foundation.example
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.foundation.service.utils.ext.global.postMainDelayedLifecycle
+import com.foundation.widget.utils.ext.global.postMainDelayedLifecycle
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
