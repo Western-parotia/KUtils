@@ -24,6 +24,7 @@ object Repositories {
     /**
      * 默认的几个，不包含需要密码
      */
+    @JvmStatic
     fun defRepositories(resp: RepositoryHandler) {
         resp.apply {
             maven(aliyunNexusPublic)
@@ -42,6 +43,7 @@ object Repositories {
         }
     }
 
+    @JvmStatic
     fun RepositoryHandler.aliyunReleaseRepositories() {
         mavenPassword(
             aliyunReleaseAndArtifacts,
@@ -50,6 +52,7 @@ object Repositories {
         )
     }
 
+    @JvmStatic
     fun RepositoryHandler.aliyunSnapshotRepositories() {
         mavenPassword(
             aliyunSnapshotAndArtifacts,
@@ -58,6 +61,7 @@ object Repositories {
         )
     }
 
+    @JvmStatic
     fun RepositoryHandler.codingRepositories() {
         mavenPassword(codingMjMaven, codingMjDefName, codingMjDefPassword)
     }
