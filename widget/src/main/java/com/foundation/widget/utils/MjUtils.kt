@@ -9,16 +9,23 @@ import com.foundation.widget.utils.MjUtils.setUiScreenWidth
  * [setUiScreenWidth]修改dp计算时默认的宽值
  */
 object MjUtils {
-    internal var _app: Application? = null
-    internal var isDebug = false
+    private var _app: Application? = null
+    private var _isDebug = false
     internal var uiScreenWidth = 375
 
-    fun init(app: Application, isDebug: Boolean) {
+    val app get() = _app!!
+    val isDebug get() = _isDebug
+
+    fun init(app: Application) {
         _app = app
-        this.isDebug = isDebug
     }
 
-    fun isInit() = _app != null
+    /**
+     * 设置全局debug状态
+     */
+    fun setDebug(isDebug: Boolean) {
+        this._isDebug = isDebug
+    }
 
     /**
      * 修改dp计算时默认的宽值，默认375
@@ -27,5 +34,3 @@ object MjUtils {
         uiScreenWidth = width
     }
 }
-
-internal val app get() = MjUtils._app!!
