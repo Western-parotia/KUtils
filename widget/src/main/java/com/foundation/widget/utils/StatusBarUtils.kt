@@ -18,7 +18,7 @@ object StatusBarUtils {
     private var defStatusBarHeight: Int = -1
         get() {
             if (field < 0) {
-                val res = app.resources
+                val res = MjUtils.app.resources
                 val resId = res.getIdentifier("status_bar_height", "dimen", "android")
                 field = res.getDimensionPixelSize(resId)
             }

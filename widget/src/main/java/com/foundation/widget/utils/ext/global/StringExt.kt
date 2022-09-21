@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
-import com.foundation.widget.utils.app
+import com.foundation.widget.utils.MjUtils
 
 /**
  * @param toastText 吐司文案，空表示不吐司
@@ -14,10 +14,10 @@ fun CharSequence?.clipboardAndToast(toastText: CharSequence = "已复制到剪�
     if (this.isNullOrEmpty()) {
         return
     }
-    val cbm = app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val cbm = MjUtils.app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val clipData = ClipData.newPlainText("xpx copy", this)
     cbm.setPrimaryClip(clipData)
-    Toast.makeText(app, toastText, Toast.LENGTH_SHORT).show()
+    Toast.makeText(MjUtils.app, toastText, Toast.LENGTH_SHORT).show()
 }
 
 /**
