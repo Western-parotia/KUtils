@@ -18,6 +18,8 @@ object MjUtils {
         this.isDebug = isDebug
     }
 
+    fun isInit() = _app != null
+
     /**
      * 修改dp计算时默认的宽值，默认375
      */
