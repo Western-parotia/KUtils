@@ -13,7 +13,7 @@ object MjUtils {
     private var _isDebug = false
     internal var uiScreenWidth = 375
 
-    val app get() = _app!!
+    val app get() = _app ?: throw UninitializedPropertyAccessException("未调用init")
     val isDebug get() = _isDebug
 
     fun init(app: Application) {

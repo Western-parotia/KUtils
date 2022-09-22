@@ -1,12 +1,33 @@
 package com.foundation.widget.utils.ext.view
 
-import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
+import androidx.core.view.doOnDetach
 import androidx.lifecycle.LifecycleOwner
 import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.doOnDestroyed
+import com.foundation.widget.utils.ext.global.log
 import com.google.gson.JsonPrimitive
+
+fun WebView.refreshTitle(callback: (title: String) -> Unit) {
+    val action = Runnable {
+        val tagTitle: String = title ?: ""
+        val urlStr = url ?: ""
+        val pageTitle = if (tagTitle.isNotEmpty() && !urlStr.contains(tagTitle)) {
+            tagTitle
+        } else {
+            null
+        }
+        "getTitle:$title  pageTitle:$pageTitle url:$url".log("Web")
+        pageTitle?.let {
+            callback(it)
+        }
+    }
+    postDelayed(action, 500L)
+    doOnDetach {
+        removeCallbacks(action)
+    }
+}
 
 /**
  * 默认配置
@@ -85,6 +106,6 @@ fun WebView.callJS(
         evaluateJavascript(callSt, resultCallback)
     }
     if (MjUtils.isDebug) {
-        Log.d("Web", "js调用方法: callSt")
+        "js调用方法: callSt".log("Web")
     }
 }

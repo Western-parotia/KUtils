@@ -1,10 +1,35 @@
 package com.foundation.widget.utils.ext.global
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.foundation.widget.utils.MjUtils
+
+private const val TAG = "mjLog"
+
+@JvmOverloads
+fun String.log(secondTag: String = "") {
+    logT(secondTag, false)
+}
+
+@SuppressLint("LogDetector")
+fun String.logT(secondTag: String = "", showThread: Boolean = true) {
+    if (MjUtils.isDebug) {
+        val str = if (showThread) "Thread:${Thread.currentThread().name}，" else ""
+        Log.i(TAG, "${str}Time:${System.nanoTime()}，$secondTag:$this")
+    }
+}
+
+@SuppressLint("LogDetector")
+@JvmOverloads
+fun String.logE(secondTag: String = "") {
+    if (MjUtils.isDebug) {
+        Log.e(TAG, "$secondTag $this")
+    }
+}
 
 /**
  * @param toastText 吐司文案，空表示不吐司
