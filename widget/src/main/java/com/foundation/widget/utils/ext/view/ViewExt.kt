@@ -122,25 +122,24 @@ fun View.postDelayedLifecycle(mills: Long, run: Runnable): ViewPostDelayedInfo {
  * 加了返回值，可自行remove
  */
 inline fun View.doOnDetachCanCancel(crossinline action: (view: View) -> Unit): View.OnAttachStateChangeListener? {
-    return if (!ViewCompat.isAttachedToWindow(this)) {
+    if (!ViewCompat.isAttachedToWindow(this)) {
         action(this)
-        null
-    } else {
-        val detachListener = object : View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(view: View) {}
-
-            override fun onViewDetachedFromWindow(view: View) {
-                removeOnAttachStateChangeListener(this)
-                action(view)
-            }
-        }
-        addOnAttachStateChangeListener(detachListener)
-        detachListener
+        return null
     }
+    val detachListener = object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(view: View) {}
+
+        override fun onViewDetachedFromWindow(view: View) {
+            removeOnAttachStateChangeListener(this)
+            action(view)
+        }
+    }
+    addOnAttachStateChangeListener(detachListener)
+    return detachListener
 }
 
 /**
- * postDelayedLifecycle时remove用的
+ * postDelayedLifecycle时想提前remove用的[removeCallback]
  */
 class ViewPostDelayedInfo(
     private val view: View,

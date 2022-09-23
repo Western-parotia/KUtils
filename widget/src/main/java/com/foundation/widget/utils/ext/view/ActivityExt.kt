@@ -1,10 +1,11 @@
 package com.foundation.widget.utils.ext.view
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.ComponentActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleEventObserver
+import com.foundation.widget.utils.MjKeyboardUtils
 import com.foundation.widget.utils.ext.doOnCreated
 import com.foundation.widget.utils.ext.doOnDestroyed
 import com.foundation.widget.utils.ext.doOnNextResumed
@@ -13,15 +14,6 @@ import com.foundation.widget.utils.ext.doOnResumed
 /**
  * create by zhusw on 6/9/21 18:29
  */
-
-/**
- * @param params 入参
- */
-inline fun <reified T> Fragment.jumpToActivity(params: (Intent.() -> Unit) = {}) {
-    val intent = Intent(activity, T::class.java)
-    params(intent)
-    startActivity(intent)
-}
 
 /**
  * @param params 入参
@@ -55,4 +47,17 @@ fun ComponentActivity.doOnNextResumed(callback: Runnable): LifecycleEventObserve
 
 fun ComponentActivity.doOnDestroyed(callback: Runnable): LifecycleEventObserver? {
     return lifecycle.doOnDestroyed(callback)
+}
+
+fun Activity.hideKeyboard() {
+    window?.decorView?.let { MjKeyboardUtils.hideKeyboard(it) }
+}
+
+/**
+ * 键盘显隐监听
+ * 目前一个Activity只能有一个监听，你可以指定多个view进行多监听[MjKeyboardUtils.setOnKeyboardChangedListener]
+ * @param onChangedListener true:键盘弹出，false键盘收起
+ */
+fun Activity.setOnKeyboardChangedListener(onChangedListener: (Boolean) -> Unit) {
+    window?.decorView?.let { MjKeyboardUtils.setOnKeyboardChangedListener(it, onChangedListener) }
 }

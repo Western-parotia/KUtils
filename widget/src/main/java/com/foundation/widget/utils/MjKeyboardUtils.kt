@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.fragment.app.Fragment
 
 object MjKeyboardUtils {
     /**
@@ -67,25 +66,4 @@ object MjKeyboardUtils {
         //view被删除后应取消相关监听，但是单纯的remove反而会引起更多问题，鉴于场景几乎没有，暂时忽略
 //        view.doOnDetach { view.viewTreeObserver.removeOnGlobalLayoutListener(listener) }
     }
-}
-
-fun Activity.hideKeyboard() {
-    window?.decorView?.let { MjKeyboardUtils.hideKeyboard(it) }
-}
-
-fun Fragment.hideKeyboard() {
-    activity?.window?.decorView?.let { MjKeyboardUtils.hideKeyboard(it) }
-}
-
-/**
- * 键盘显隐监听
- * 目前一个Activity只能有一个监听
- * @param onChangedListener true:键盘弹出，false键盘收起
- */
-fun Activity.setOnKeyboardChangedListener(onChangedListener: (Boolean) -> Unit) {
-    window?.decorView?.let { MjKeyboardUtils.setOnKeyboardChangedListener(it, onChangedListener) }
-}
-
-fun Fragment.setOnKeyboardChangedListener(onChangedListener: (Boolean) -> Unit) {
-    view?.let { MjKeyboardUtils.setOnKeyboardChangedListener(it, onChangedListener) }
 }

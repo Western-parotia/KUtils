@@ -1,25 +1,20 @@
-@file:Suppress("PackageDirectoryMismatch")//包名只能是Android
+package com.foundation.widget.utils.ext.view
 
-package android.view
-
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
-/**
- * Android包专用
- * 其他拓展不要写在这里
- */
-
 
 /**
  * generateDefaultLayoutParams是protected的，所以有此拓展
  */
-fun ViewGroup.getDefLayoutParams(): ViewGroup.LayoutParams {
+fun ViewGroup.getDefLayoutParams(): ViewGroupLayoutParams {
     return if (this is RecyclerView) {
         this.layoutManager?.generateDefaultLayoutParams() ?: RecyclerView.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     } else {
-        generateDefaultLayoutParams()
+        val method = this.javaClass.getDeclaredMethod("generateDefaultLayoutParams")
+        method.isAccessible = true
+        method.invoke(this) as ViewGroupLayoutParams
     }
 }

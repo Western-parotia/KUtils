@@ -2,15 +2,13 @@ package com.foundation.widget.utils.ext.view
 
 import android.webkit.WebSettings
 import android.webkit.WebView
-import androidx.core.view.doOnDetach
 import androidx.lifecycle.LifecycleOwner
-import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.doOnDestroyed
 import com.foundation.widget.utils.ext.global.log
 import com.google.gson.JsonPrimitive
 
 fun WebView.refreshTitle(callback: (title: String) -> Unit) {
-    val action = Runnable {
+    postDelayedLifecycle(500) {
         val tagTitle: String = title ?: ""
         val urlStr = url ?: ""
         val pageTitle = if (tagTitle.isNotEmpty() && !urlStr.contains(tagTitle)) {
@@ -22,10 +20,6 @@ fun WebView.refreshTitle(callback: (title: String) -> Unit) {
         pageTitle?.let {
             callback(it)
         }
-    }
-    postDelayed(action, 500L)
-    doOnDetach {
-        removeCallbacks(action)
     }
 }
 
@@ -105,7 +99,5 @@ fun WebView.callJS(
         callSt = "${functionSt}(${builder})"
         evaluateJavascript(callSt, resultCallback)
     }
-    if (MjUtils.isDebug) {
-        "js调用方法: callSt".log("Web")
-    }
+    "js调用方法: callSt".log("Web")
 }
