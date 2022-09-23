@@ -1,6 +1,5 @@
 package com.foundation.widget.utils.ext.view
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.foundation.widget.utils.MjUtils
@@ -24,19 +23,12 @@ fun Context.safetyStartActivity(intent: Intent) {
     }
 }
 
-fun Context.notSafetyStartActivity(intent: Intent) {
+/**
+ * @param params 入参
+ */
+inline fun <reified T> Context.jumpToActivity(params: (Intent.() -> Unit) = {}) {
+    val intent = Intent(this, T::class.java)
+    params(intent)
     startActivity(intent)
-}
-
-
-fun Activity.safetyStartActivityForResult(intent: Intent, requestCode: Int) {
-    try {
-        startActivityForResult(intent, requestCode)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        if (MjUtils.isDebug) {
-            throw  e
-        }
-    }
 }
 

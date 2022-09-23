@@ -17,7 +17,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         _app = this
-        MjUtils.init(this, BuildConfig.DEBUG)
+        MjUtils.init(this)
+        MjUtils.setDebug(BuildConfig.DEBUG)
     }
 }
 
