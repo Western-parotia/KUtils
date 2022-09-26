@@ -1,8 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 import com.buildsrc.kts.GlobalConfig
-import com.buildsrc.kts.Repositories.aliyunReleaseRepositories
-import com.buildsrc.kts.Repositories.aliyunSnapshotRepositories
-import com.buildsrc.kts.Repositories.codingRepositories
 
 //buildSrc的初始化init
 GlobalConfig.init(project)
@@ -23,9 +20,6 @@ buildscript {//这里不支持import
 allprojects {
     repositories {
         com.buildsrc.kts.Repositories.defRepositories(this)
-        aliyunReleaseRepositories()
-        aliyunSnapshotRepositories()
-        codingRepositories()
     }
 }
 

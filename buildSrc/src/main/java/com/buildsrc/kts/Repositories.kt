@@ -11,18 +11,24 @@ object Repositories {
     private const val aliyunCentral = "https://maven.aliyun.com/repository/central/"
     private const val jitpackIo = "https://jitpack.io"
 
-    private const val aliyunReleaseAndArtifacts =
+    internal const val aliyunReleaseAndArtifacts =
         "https://packages.aliyun.com/maven/repository/2097827-release-UquW0x/"
-    private const val aliyunSnapshotAndArtifacts =
+    internal const val aliyunSnapshotAndArtifacts =
         "https://packages.aliyun.com/maven/repository/2097827-snapshot-uMDdUx/"
 
-    private const val codingMjMaven =
+    //公共账号密码，只可用于拉取
+    private const val aliyunMjDefName = "632a761fe39d7932770f41cf"
+    private const val aliyunMjDefPassword = "obLVJ9r]Cx8["
+
+    internal const val codingMjMaven =
         "https://mijukeji-maven.pkg.coding.net/repository/jileiku/base_maven/"
+
+    //公共账号密码，只可用于拉取
     private const val codingMjDefName = "base_maven-1648105141034"
     private const val codingMjDefPassword = "491ab3340c82a564061c505a8afd99e16d1305b5"
 
     /**
-     * 默认的几个，不包含需要密码
+     * 默认的需要拉的库
      */
     @JvmStatic
     fun defRepositories(resp: RepositoryHandler) {
@@ -33,6 +39,21 @@ object Repositories {
             maven(aliyunJcenter)
             maven(aliyunCentral)
             maven(jitpackIo)
+            mavenPassword(
+                aliyunReleaseAndArtifacts,
+                aliyunMjDefName,
+                aliyunMjDefPassword
+            )
+            mavenPassword(
+                aliyunSnapshotAndArtifacts,
+                aliyunMjDefName,
+                aliyunMjDefPassword
+            )
+            mavenPassword(
+                codingMjMaven,
+                codingMjDefName,
+                codingMjDefPassword
+            )
 
 //            可能会影响下载速度，如果需要可以单独放开
 //            mavenCentral()
@@ -43,30 +64,7 @@ object Repositories {
         }
     }
 
-    @JvmStatic
-    fun RepositoryHandler.aliyunReleaseRepositories() {
-        mavenPassword(
-            aliyunReleaseAndArtifacts,
-            Publish.Maven.repositoryUserName,
-            Publish.Maven.repositoryPassword
-        )
-    }
-
-    @JvmStatic
-    fun RepositoryHandler.aliyunSnapshotRepositories() {
-        mavenPassword(
-            aliyunSnapshotAndArtifacts,
-            Publish.Maven.repositoryUserName,
-            Publish.Maven.repositoryPassword
-        )
-    }
-
-    @JvmStatic
-    fun RepositoryHandler.codingRepositories() {
-        mavenPassword(codingMjMaven, codingMjDefName, codingMjDefPassword)
-    }
-
-    private fun RepositoryHandler.mavenPassword(url: String, pwdName: String, pwd: String) {
+    internal fun RepositoryHandler.mavenPassword(url: String, pwdName: String, pwd: String) {
         maven(url) {
             credentials {
                 username = pwdName

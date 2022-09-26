@@ -1,7 +1,5 @@
 import com.buildsrc.kts.Dependencies
 import com.buildsrc.kts.Publish
-import com.buildsrc.kts.Repositories.aliyunReleaseRepositories
-import com.buildsrc.kts.Repositories.aliyunSnapshotRepositories
 
 plugins {
     id("com.android.library")
@@ -92,9 +90,9 @@ publishing {
         }
         repositories {
             if (Publish.SNAPSHOT) {
-                aliyunSnapshotRepositories()
+                Publish.Maven.aliyunSnapshotRepositories(this)
             } else {
-                aliyunReleaseRepositories()
+                Publish.Maven.aliyunReleaseRepositories(this)
             }
         }
     }
