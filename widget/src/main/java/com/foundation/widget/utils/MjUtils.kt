@@ -10,11 +10,34 @@ import com.foundation.widget.utils.MjUtils.setUiScreenWidth
  */
 object MjUtils {
     private var _app: Application? = null
-    private var _isDebug = false
+    private var _isDebug: Boolean? = null
     internal var uiScreenWidth = 375
 
     val app get() = _app ?: throw UninitializedPropertyAccessException("未调用init")
-    val isDebug get() = _isDebug
+
+    val isDebug: Boolean
+        get() {
+            _isDebug?.let {
+                return it
+            }
+
+            //如果没有设置debug状态，将尝试反射获取
+            if (_app != null) {
+                try {
+                    val bcCls = Class.forName("${app.packageName}.BuildConfig")
+                    val bcField = bcCls.getField("DEBUG")
+                    (bcField.get(null) as? Boolean)?.let {
+                        _isDebug = it
+                        return it
+                    }
+                } catch (ignore: Exception) {
+                }
+            }
+
+            //没获取到默认false
+            _isDebug = false
+            return false
+        }
 
     fun init(app: Application) {
         _app = app
