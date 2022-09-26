@@ -20,6 +20,17 @@ fun IUIContext.hideKeyboard() {
     rootView?.let { MjKeyboardUtils.hideKeyboard(it) }
 }
 
+fun IUIContext.safetyStartActivity(intent: Intent) {
+    try {
+        startActivity(intent)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        if (MjUtils.isDebug) {
+            throw  e
+        }
+    }
+}
+
 fun IUIContext.safetyStartActivityForResult(
     intent: Intent,
     requestCode: Int,
