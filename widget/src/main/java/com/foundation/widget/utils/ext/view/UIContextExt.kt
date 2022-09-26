@@ -96,3 +96,9 @@ inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {
     params(intent)
     startActivity(intent)
 }
+
+/**
+ * Activity的非null情况，当然你必须明确知道Activity存在
+ */
+val IUIContext.requireActivity
+    get() = activity ?: throw IllegalStateException("this $this not attached to an activity.")

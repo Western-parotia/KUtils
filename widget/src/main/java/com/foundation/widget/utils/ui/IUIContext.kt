@@ -88,6 +88,10 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
         override fun getLifecycle() = ui.lifecycle
 
         override fun getViewModelStore() = ui.viewModelStore
+
+        override fun toString(): String {
+            return "$this,delegate:$delegate"
+        }
     }
 
     class FragmentUIContextWrapper(private val ui: Fragment) : IUIContext {
@@ -116,5 +120,9 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
         override fun getLifecycle() = ui.lifecycle
 
         override fun getViewModelStore() = ui.viewModelStore
+
+        override fun toString(): String {
+            return "$this,delegate:$delegate"
+        }
     }
 }
