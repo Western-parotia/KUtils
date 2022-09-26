@@ -39,6 +39,11 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
     val rootView: View?
 
     /**
+     * 实际代理类，如：Fragment、Activity
+     */
+    val delegate: Any
+
+    /**
      * view的生命周期监听，注意Fragment立即获取会崩溃
      */
     fun requireViewLifecycle(): Lifecycle
@@ -61,6 +66,7 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
         override val activity = ui
         override val supportFragmentManager = ui.supportFragmentManager
         override val rootView = ui.window?.decorView
+        override val delegate = ui
 
         /**
          * view同Activity的生命周期
@@ -89,6 +95,7 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
         override val activity = ui.activity
         override val supportFragmentManager = ui.childFragmentManager
         override val rootView = ui.view
+        override val delegate = ui
 
         override fun requireViewLifecycle() = ui.viewLifecycleOwner.lifecycle
 
