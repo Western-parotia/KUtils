@@ -2,9 +2,8 @@ package com.foundation.widget.utils.ext.global
 
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import com.foundation.widget.utils.ext.doOnDestroyed
 
 /**
  * 注意：无生命周期，自动移除见[postDelayedLifecycle]
@@ -22,13 +21,9 @@ fun Handler.postDelayedLifecycle(
     run: Runnable
 ) {
     postDelayed(mills, run)
-    owner.lifecycle.addObserver(object : LifecycleEventObserver {
-        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-            if (event == Lifecycle.Event.ON_DESTROY) {
-                removeCallbacks(run)
-            }
-        }
-    })
+    owner.lifecycle.doOnDestroyed {
+        removeCallbacks(run)
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
