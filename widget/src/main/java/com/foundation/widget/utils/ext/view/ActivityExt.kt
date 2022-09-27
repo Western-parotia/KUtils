@@ -7,4 +7,5 @@ import com.foundation.widget.utils.ui.IUIContext
  * create by zhusw on 6/9/21 18:29
  */
 
-fun FragmentActivity.toUIContext() = IUIContext.createWithActivity(this)
+fun FragmentActivity.toUIContext() =
+    if (this is IUIContext) this else IUIContext.createWithActivity(this)

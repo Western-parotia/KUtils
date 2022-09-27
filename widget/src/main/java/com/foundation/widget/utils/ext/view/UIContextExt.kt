@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.foundation.widget.utils.MjKeyboardUtils
 import com.foundation.widget.utils.MjUtils
+import com.foundation.widget.utils.ext.doOnCreated
 import com.foundation.widget.utils.ext.doOnDestroyed
 import com.foundation.widget.utils.ext.doOnNextResumed
 import com.foundation.widget.utils.ext.doOnResumed
@@ -13,7 +14,7 @@ import com.foundation.widget.utils.ui.IUIContext
  * 关掉当前页面（fragment则关掉对应Activity）
  */
 fun IUIContext.finish() {
-    this.getActivity()?.finish()
+    this.activity?.finish()
 }
 
 fun IUIContext.hideKeyboard() {
@@ -51,7 +52,7 @@ fun IUIContext.safetyStartActivityForResult(
  */
 fun IUIContext.doOnCreated(callback: Runnable) {
     viewLifecycleWithCallback {
-        it.doOnDestroyed(callback)
+        it?.doOnCreated(callback)
     }
 }
 
@@ -60,7 +61,7 @@ fun IUIContext.doOnCreated(callback: Runnable) {
  */
 fun IUIContext.doOnResumed(callback: Runnable) {
     viewLifecycleWithCallback {
-        it.doOnResumed(callback)
+        it?.doOnResumed(callback)
     }
 }
 
@@ -69,13 +70,17 @@ fun IUIContext.doOnResumed(callback: Runnable) {
  */
 fun IUIContext.doOnNextResumed(callback: Runnable) {
     viewLifecycleWithCallback {
-        it.doOnNextResumed(callback)
+        it?.doOnNextResumed(callback)
     }
 }
 
 fun IUIContext.doOnDestroyed(callback: Runnable) {
     viewLifecycleWithCallback {
-        it.doOnDestroyed(callback)
+        if (it == null) {
+            callback.run()
+        } else {
+            it.doOnDestroyed(callback)
+        }
     }
 }
 
@@ -92,7 +97,7 @@ fun IUIContext.setOnKeyboardChangedListener(onChangedListener: (Boolean) -> Unit
  * @param params 入参
  */
 inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {}) {
-    val intent = Intent(getActivity(), T::class.java)
+    val intent = Intent(requireActivity, T::class.java)
     params(intent)
     startActivity(intent)
 }
@@ -101,4 +106,4 @@ inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {
  * Activity的非null情况，当然你必须明确知道Activity存在
  */
 val IUIContext.requireActivity
-    get() = getActivity() ?: throw IllegalStateException("this $this not attached to an activity.")
+    get() = activity ?: throw IllegalStateException("this $this not attached to an activity.")

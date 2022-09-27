@@ -17,7 +17,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import com.foundation.widget.utils.ext.observeOnce
 import com.foundation.widget.utils.ext.view.doOnNextResumed
-import com.foundation.widget.utils.ext.view.requireActivity
 import com.foundation.widget.utils.ext.view.toUIContext
 
 /**
@@ -25,7 +24,7 @@ import com.foundation.widget.utils.ext.view.toUIContext
  * 拓展见Activity、Fragment的[toUIContext]
  * 共有拓展见UIContextExt：[doOnNextResumed]等
  */
-interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller {
+interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller, IUIFieldOpt {
     companion object {
         fun createWithActivity(activity: FragmentActivity): IUIContext =
             ActivityUIContextWrapper(activity)
@@ -38,13 +37,6 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
      * 当前ui是否关闭了
      */
     val isFinished: Boolean
-
-    /**
-     * Activity为自己
-     * Fragment为宿主
-     * [requireActivity]
-     */
-    fun getActivity(): FragmentActivity?
 
     /**
      * 当前自己的FragmentManager
@@ -66,9 +58,10 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
     fun requireViewLifecycle(): Lifecycle
 
     /**
-     * 等待view完成再获取，不会崩溃
+     * 等待view完成再获取Lifecycle，不会崩溃（主要是Fragment）
+     * @param run destroy之前返回有值，destroy之后返回null
      */
-    fun viewLifecycleWithCallback(run: (Lifecycle) -> Unit)
+    fun viewLifecycleWithCallback(run: (Lifecycle?) -> Unit)
 
     fun startActivity(intent: Intent, options: Bundle? = null)
 
@@ -105,7 +98,7 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
          */
         override fun requireViewLifecycle() = lifecycle
 
-        override fun viewLifecycleWithCallback(run: (Lifecycle) -> Unit) =
+        override fun viewLifecycleWithCallback(run: (Lifecycle?) -> Unit) =
             run.invoke(lifecycle)
 
         override fun startActivity(intent: Intent, options: Bundle?) =
@@ -143,9 +136,9 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
 
         override fun requireViewLifecycle() = ui.viewLifecycleOwner.lifecycle
 
-        override fun viewLifecycleWithCallback(run: (Lifecycle) -> Unit) {
-            ui.viewLifecycleOwnerLiveData.observeOnce(ui) {
-                run.invoke(it.lifecycle)
+        override fun viewLifecycleWithCallback(run: (Lifecycle?) -> Unit) {
+            ui.viewLifecycleOwnerLiveData.observeOnce(ui) { owner: LifecycleOwner? ->
+                run.invoke(owner?.lifecycle)
             }
         }
 
