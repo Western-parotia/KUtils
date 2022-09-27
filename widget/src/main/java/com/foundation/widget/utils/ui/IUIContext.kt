@@ -3,6 +3,12 @@ package com.foundation.widget.utils.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -11,6 +17,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import com.foundation.widget.utils.ext.observeOnce
 import com.foundation.widget.utils.ext.view.doOnNextResumed
+import com.foundation.widget.utils.ext.view.requireActivity
 import com.foundation.widget.utils.ext.view.toUIContext
 
 /**
@@ -18,7 +25,7 @@ import com.foundation.widget.utils.ext.view.toUIContext
  * 拓展见Activity、Fragment的[toUIContext]
  * 共有拓展见UIContextExt：[doOnNextResumed]等
  */
-interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
+interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller {
     companion object {
         fun createWithActivity(activity: FragmentActivity): IUIContext =
             ActivityUIContextWrapper(activity)
@@ -32,9 +39,19 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
      */
     val isFinished: Boolean
 
-    val activity: FragmentActivity?
+    /**
+     * Activity为自己
+     * Fragment为宿主
+     * [requireActivity]
+     */
+    fun getActivity(): FragmentActivity?
 
-    val supportFragmentManager: FragmentManager
+    /**
+     * 当前自己的FragmentManager
+     * Activity为[FragmentActivity.getSupportFragmentManager]
+     * Fragment为[Fragment.getChildFragmentManager]
+     */
+    val currentFragmentManager: FragmentManager
 
     val rootView: View?
 
@@ -55,7 +72,22 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
 
     fun startActivity(intent: Intent, options: Bundle? = null)
 
+    @Deprecated("建议使用registerForActivityResult")
     fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle? = null)
+
+    /**
+     * @param contract 如原始的intent跳转：[ActivityResultContracts.StartActivityForResult]
+     */
+    override fun <I, O> registerForActivityResult(
+        contract: ActivityResultContract<I, O>,
+        callback: ActivityResultCallback<O>
+    ): ActivityResultLauncher<I>
+
+    override fun <I, O> registerForActivityResult(
+        contract: ActivityResultContract<I, O>,
+        registry: ActivityResultRegistry,
+        callback: ActivityResultCallback<O>
+    ): ActivityResultLauncher<I>
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     // 内部实现了Activity和Fragment
@@ -63,8 +95,8 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
 
     class ActivityUIContextWrapper(private val ui: FragmentActivity) : IUIContext {
         override val isFinished = ui.isFinishing
-        override val activity = ui
-        override val supportFragmentManager = ui.supportFragmentManager
+        override fun getActivity() = ui
+        override val currentFragmentManager = ui.supportFragmentManager
         override val rootView = ui.window?.decorView
         override val delegate = ui
 
@@ -73,31 +105,39 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
          */
         override fun requireViewLifecycle() = lifecycle
 
-        override fun viewLifecycleWithCallback(run: (Lifecycle) -> Unit) {
+        override fun viewLifecycleWithCallback(run: (Lifecycle) -> Unit) =
             run.invoke(lifecycle)
-        }
 
-        override fun startActivity(intent: Intent, options: Bundle?) {
+        override fun startActivity(intent: Intent, options: Bundle?) =
             ui.startActivity(intent, options)
-        }
 
-        override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) {
+        override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) =
             ui.startActivityForResult(intent, requestCode, options)
-        }
+
+        override fun <I, O> registerForActivityResult(
+            contract: ActivityResultContract<I, O>,
+            callback: ActivityResultCallback<O>
+        ): ActivityResultLauncher<I> =
+            ui.registerForActivityResult(contract, callback)
+
+        override fun <I, O> registerForActivityResult(
+            contract: ActivityResultContract<I, O>,
+            registry: ActivityResultRegistry,
+            callback: ActivityResultCallback<O>
+        ): ActivityResultLauncher<I> =
+            ui.registerForActivityResult(contract, registry, callback)
 
         override fun getLifecycle() = ui.lifecycle
 
         override fun getViewModelStore() = ui.viewModelStore
 
-        override fun toString(): String {
-            return "$this,delegate:$delegate"
-        }
+        override fun toString() = "$this,delegate:$delegate"
     }
 
     class FragmentUIContextWrapper(private val ui: Fragment) : IUIContext {
         override val isFinished = !ui.isAdded
-        override val activity = ui.activity
-        override val supportFragmentManager = ui.childFragmentManager
+        override fun getActivity() = ui.activity
+        override val currentFragmentManager = ui.childFragmentManager
         override val rootView = ui.view
         override val delegate = ui
 
@@ -109,20 +149,29 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner {
             }
         }
 
-        override fun startActivity(intent: Intent, options: Bundle?) {
+        override fun startActivity(intent: Intent, options: Bundle?) =
             ui.startActivity(intent, options)
-        }
 
-        override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) {
+        override fun startActivityForResult(intent: Intent, requestCode: Int, options: Bundle?) =
             ui.startActivityForResult(intent, requestCode, options)
-        }
+
+        override fun <I, O> registerForActivityResult(
+            contract: ActivityResultContract<I, O>,
+            callback: ActivityResultCallback<O>
+        ): ActivityResultLauncher<I> =
+            ui.registerForActivityResult(contract, callback)
+
+        override fun <I, O> registerForActivityResult(
+            contract: ActivityResultContract<I, O>,
+            registry: ActivityResultRegistry,
+            callback: ActivityResultCallback<O>
+        ): ActivityResultLauncher<I> =
+            ui.registerForActivityResult(contract, registry, callback)
 
         override fun getLifecycle() = ui.lifecycle
 
         override fun getViewModelStore() = ui.viewModelStore
 
-        override fun toString(): String {
-            return "$this,delegate:$delegate"
-        }
+        override fun toString() = "$this,delegate:$delegate"
     }
 }

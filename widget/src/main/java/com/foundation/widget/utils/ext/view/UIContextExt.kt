@@ -13,7 +13,7 @@ import com.foundation.widget.utils.ui.IUIContext
  * 关掉当前页面（fragment则关掉对应Activity）
  */
 fun IUIContext.finish() {
-    this.activity?.finish()
+    this.getActivity()?.finish()
 }
 
 fun IUIContext.hideKeyboard() {
@@ -92,7 +92,7 @@ fun IUIContext.setOnKeyboardChangedListener(onChangedListener: (Boolean) -> Unit
  * @param params 入参
  */
 inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {}) {
-    val intent = Intent(activity, T::class.java)
+    val intent = Intent(getActivity(), T::class.java)
     params(intent)
     startActivity(intent)
 }
@@ -101,4 +101,4 @@ inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {
  * Activity的非null情况，当然你必须明确知道Activity存在
  */
 val IUIContext.requireActivity
-    get() = activity ?: throw IllegalStateException("this $this not attached to an activity.")
+    get() = getActivity() ?: throw IllegalStateException("this $this not attached to an activity.")
