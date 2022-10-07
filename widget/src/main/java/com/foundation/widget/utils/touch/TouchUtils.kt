@@ -2,6 +2,8 @@ package com.foundation.widget.utils.touch
 
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.AdapterView
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
@@ -72,17 +74,11 @@ object TouchUtils {
         }
     }
 
-    /**
-     * @param parentDeep 必须和你之前add的一致
-     */
-    fun removeTouchArea(view: View, @IntRange(from = 1, to = 8) parentDeep: Int = 1) {
-        if (parentDeep <= 0 || parentDeep >= 9) {
-            return
+    fun removeTouchArea(view: View) {
+        var targetParent: ViewParent? = view.parent
+        while (targetParent is ViewGroup) {
+            LinkedTouchDelegate.removeDelegate(view, targetParent)
+            targetParent = targetParent.parent
         }
-        var targetParent: View = view
-        for (i in 0 until parentDeep) {
-            targetParent = targetParent.parent as View
-        }
-        LinkedTouchDelegate.removeDelegate(view, targetParent)
     }
 }

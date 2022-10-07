@@ -88,13 +88,8 @@ fun View.expandTouchArea(
     TouchUtils.expandTouchArea(this, parentDeep, sizePx)
 }
 
-/**
- * @param parentDeep 必须和你之前add的一致
- */
-fun View.removeTouchArea(
-    @IntRange(from = 1, to = 8) parentDeep: Int = 1
-) {
-    TouchUtils.removeTouchArea(this, parentDeep)
+fun View.removeTouchArea() {
+    TouchUtils.removeTouchArea(this)
 }
 
 /**
