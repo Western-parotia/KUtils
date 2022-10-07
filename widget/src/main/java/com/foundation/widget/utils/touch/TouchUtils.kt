@@ -23,7 +23,7 @@ object TouchUtils {
      */
     @JvmOverloads
     fun expandTouchArea(
-        view: View,
+        expandView: View,
         @IntRange(from = 1, to = 8) parentDeep: Int = 1,
         sizePx: Int = 10.dp
     ) {
@@ -31,7 +31,7 @@ object TouchUtils {
             return
         }
         val parentView = run {
-            var p = view
+            var p = expandView
             for (i in 1..parentDeep) {
                 p = p.parent as View
             }
@@ -39,10 +39,10 @@ object TouchUtils {
         }
         parentView.doOnLayout {
             //最终parent的前一个
-            var previousParentView = view
+            var previousParentView = expandView
             //在最终parent的触摸范围
             val newViewRange = Rect()
-            view.getHitRect(newViewRange)
+            expandView.getHitRect(newViewRange)
             for (i in 1 until parentDeep) {
                 previousParentView = previousParentView.parent as View
                 when (previousParentView) {
@@ -64,7 +64,7 @@ object TouchUtils {
 
             LinkedTouchDelegate.newDelegate(
                 newViewRange,
-                view,
+                expandView,
                 parentView,
                 parentDeep,
                 sizePx
