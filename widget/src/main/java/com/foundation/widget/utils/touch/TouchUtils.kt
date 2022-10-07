@@ -2,10 +2,12 @@ package com.foundation.widget.utils.touch
 
 import android.graphics.Rect
 import android.view.View
-import android.widget.ListView
+import android.widget.AdapterView
+import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import androidx.annotation.IntRange
 import androidx.core.view.ScrollingView
+import androidx.core.view.doOnLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.foundation.widget.utils.ext.global.dp
@@ -28,16 +30,23 @@ object TouchUtils {
         if (sizePx <= 0 || parentDeep <= 0 || parentDeep >= 9) {
             return
         }
-        view.post {
+        val parentView = run {
+            var p = view
+            for (i in 1..parentDeep) {
+                p = p.parent as View
+            }
+            p
+        }
+        parentView.doOnLayout {
             //最终parent的前一个
-            var previousParentView: View = view
+            var previousParentView = view
             //在最终parent的触摸范围
             val newViewRange = Rect()
             view.getHitRect(newViewRange)
             for (i in 1 until parentDeep) {
                 previousParentView = previousParentView.parent as View
                 when (previousParentView) {
-                    is ScrollingView, is ScrollView, is ListView, is ViewPager, is ViewPager2 -> {
+                    is ScrollingView, is ScrollView, is HorizontalScrollView, is AdapterView<*>, is ViewPager, is ViewPager2 -> {
                         //可滑动的view都会覆盖touch，所以会失效
                         throw RuntimeException("deep不要包含可滑动的view：${previousParentView.javaClass}")
                     }
@@ -56,7 +65,7 @@ object TouchUtils {
             LinkedTouchDelegate.newDelegate(
                 newViewRange,
                 view,
-                previousParentView.parent as View,
+                parentView,
                 parentDeep,
                 sizePx
             )
