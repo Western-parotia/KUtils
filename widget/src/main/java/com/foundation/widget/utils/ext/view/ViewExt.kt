@@ -88,6 +88,22 @@ fun View.expandTouchArea(
     TouchUtils.expandTouchArea(this, parentDeep, sizePx)
 }
 
+fun View.expandTouchArea(
+    parentView: View,
+    sizePx: Int = 10.dp
+) {
+    TouchUtils.expandTouchArea(this, parentView, sizePx)
+}
+
+/**
+ * 拓展在可滑动view之下
+ */
+fun View.expandTouchAreaForScrollingView(
+    sizePx: Int = 10.dp
+) {
+    TouchUtils.expandTouchAreaForScrollingView(this, sizePx)
+}
+
 fun View.removeTouchArea() {
     TouchUtils.removeTouchArea(this)
 }

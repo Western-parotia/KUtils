@@ -22,6 +22,8 @@ object TouchUtils {
      *
      * @param parentDeep 附着在第几层父级（注意自己层级）
      * @param sizePx     四周拓展大小
+     * @throws ClassCastException 到root了还是没有找到
+     * @throws IllegalArgumentException 不正确的传参，如：中间包含可滑动的view
      */
     @JvmOverloads
     fun expandTouchArea(
@@ -29,7 +31,7 @@ object TouchUtils {
         @IntRange(from = 1, to = 8) parentDeep: Int = 1,
         sizePx: Int = 10.dp
     ) {
-        if (sizePx <= 0 || parentDeep <= 0 || parentDeep >= 9) {
+        if (parentDeep <= 0 || parentDeep >= 9) {
             return
         }
         val parentView = run {
@@ -39,22 +41,61 @@ object TouchUtils {
             }
             p
         }
+        expandTouchArea(expandView, parentView, sizePx)
+    }
+
+    @JvmOverloads
+    fun expandTouchAreaForScrollingView(
+        expandView: View,
+        sizePx: Int = 10.dp
+    ) {
+        if (sizePx <= 0) {
+            return
+        }
+        var parentView = expandView
+        while (true) {
+            val p = parentView.parent as View
+            when (p) {
+                is ScrollingView, is ScrollView, is HorizontalScrollView, is AdapterView<*>, is ViewPager, is ViewPager2 -> {
+                    if (parentView == expandView) {
+                        throw IllegalArgumentException("parent就是滑动view，无法拓展")
+                    }
+                    expandTouchArea(expandView, parentView, sizePx)
+                    return
+                }
+            }
+            parentView = p
+        }
+    }
+
+    @JvmOverloads
+    fun expandTouchArea(
+        expandView: View,
+        parentView: View,
+        sizePx: Int = 10.dp
+    ) {
+        if (sizePx <= 0) {
+            return
+        }
         parentView.doOnLayout {
-            //最终parent的前一个
-            var previousParentView = expandView
+            //循环遍历，临时parent
+            var pv = expandView
             //在最终parent的触摸范围
             val newViewRange = Rect()
             expandView.getHitRect(newViewRange)
-            for (i in 1 until parentDeep) {
-                previousParentView = previousParentView.parent as View
-                when (previousParentView) {
+            while (true) {
+                pv = pv.parent as View
+                if (pv == parentView) {
+                    break
+                }
+                when (pv) {
                     is ScrollingView, is ScrollView, is HorizontalScrollView, is AdapterView<*>, is ViewPager, is ViewPager2 -> {
                         //可滑动的view都会覆盖touch，所以会失效
-                        throw RuntimeException("deep不要包含可滑动的view：${previousParentView.javaClass}")
+                        throw IllegalArgumentException("deep不要包含可滑动的view：${pv.javaClass}")
                     }
                     else -> {
                         val rect = Rect()
-                        previousParentView.getHitRect(rect)
+                        pv.getHitRect(rect)
                         newViewRange.offset(rect.left, rect.top) //相对平移
                     }
                 }
@@ -68,7 +109,6 @@ object TouchUtils {
                 newViewRange,
                 expandView,
                 parentView,
-                parentDeep,
                 sizePx
             )
         }

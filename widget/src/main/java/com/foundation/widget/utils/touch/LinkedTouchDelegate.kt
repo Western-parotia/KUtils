@@ -16,11 +16,10 @@ internal class LinkedTouchDelegate private constructor(
     private val delegateView: View,
     private val sharedList: ArrayList<LinkedTouchDelegate>,
     private val targetParent: View,
-    private val parentDeep: Int,
     private val sizePx: Int
 ) : TouchDelegate(bounds, delegateView) {
     private val mOnLayoutChangeListener = View.OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-        TouchUtils.expandTouchArea(delegateView, parentDeep, sizePx)
+        TouchUtils.expandTouchArea(delegateView, targetParent, sizePx)
     }
 
     companion object {
@@ -31,7 +30,6 @@ internal class LinkedTouchDelegate private constructor(
             bounds: Rect,
             delegateView: View,
             targetParent: View,
-            parentDeep: Int,
             sizePx: Int
         ) {
             //取集合
@@ -47,15 +45,12 @@ internal class LinkedTouchDelegate private constructor(
                         delegateView,
                         list,
                         targetParent,
-                        parentDeep,
                         sizePx
                     )
                 )
             } else {
                 val old = list[index]
-                if (old.bounds == bounds && old.targetParent == targetParent
-                    && old.parentDeep == parentDeep && old.sizePx == sizePx
-                ) {
+                if (old.bounds == bounds && old.targetParent == targetParent && old.sizePx == sizePx) {
                     //完全一致，不需要动
                     return
                 }
@@ -66,7 +61,6 @@ internal class LinkedTouchDelegate private constructor(
                     delegateView,
                     list,
                     targetParent,
-                    parentDeep,
                     sizePx
                 )
             }
