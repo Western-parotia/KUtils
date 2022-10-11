@@ -50,7 +50,7 @@ fun <T : ISelectedListBean> List<T>?.setSelected(bean: T) {
 /**
  * 全选/全不选（多选逻辑）
  */
-var <T : ISelectedListBean> List<T>?.isSelectedAll
+var <T : ISelectedListBean> List<T>?.isAllSelected
     get() = this.allTrue { it.isSelected }
     set(value) {
         this?.forEach {
