@@ -48,13 +48,15 @@ fun <T : ISelectedListBean> List<T>?.setSelected(bean: T) {
 }
 
 /**
- * 全选（多选逻辑）
+ * 全选/全不选（多选逻辑）
  */
-fun <T : ISelectedListBean> List<T>?.selectedAll() {
-    this?.forEach {
-        it.isSelected = true
+var <T : ISelectedListBean> List<T>?.selectedAll
+    get() = this.allTrue { it.isSelected }
+    set(value) {
+        this?.forEach {
+            it.isSelected = value
+        }
     }
-}
 
 /**
  * 获取选择的那条数据（单选逻辑）
@@ -104,11 +106,6 @@ fun <T : ISelectedListBean> List<T>?.reseatData() {
  * @return true至少有一个选中
  */
 fun <T : ISelectedListBean> List<T>?.hasSelected() = selectedPosition >= 0
-
-/**
- * 是否全选（多选逻辑）
- */
-fun <T : ISelectedListBean> List<T>?.isAllSelected() = this.allTrue { it.isSelected }
 
 /**
  * 指定item取反
