@@ -40,6 +40,7 @@ fun removeGlobalRunnable(runnable: Runnable) {
  * @param deduplication 去重
  * @param run 必须显示指定为Runnable类：Runnable {xxx}
  */
+@JvmOverloads
 fun postMain(deduplication: Boolean = true, run: Runnable) {
     if (deduplication) {
         globalHandler.removeCallbacks(run)
@@ -62,6 +63,7 @@ fun postMainSmart(run: Runnable) {
  * 注意：无生命周期，自动移除见[postMainDelayedLifecycle]
  * @param deduplication 是否去重
  */
+@JvmOverloads
 fun postMainDelayed(mills: Long, deduplication: Boolean = true, run: Runnable) {
     if (deduplication) {
         removeGlobalRunnable(run)
@@ -73,6 +75,7 @@ fun postMainDelayed(mills: Long, deduplication: Boolean = true, run: Runnable) {
  * destroy时自动移除
  * @param deduplication 是否去重
  */
+@JvmOverloads
 fun postMainDelayedLifecycle(
     owner: LifecycleOwner,
     mills: Long,

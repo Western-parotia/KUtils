@@ -68,6 +68,7 @@ fun WebView.resetAll() {
  * @param parametersEscape 是否将参数转义（如{"a":1}就必须转义）
  * @param resultCallback null表示无返回值
  */
+@JvmOverloads
 fun WebView.callJS(
     functionSt: String,
     vararg parameters: String,

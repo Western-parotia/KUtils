@@ -8,6 +8,7 @@ private const val CLICK_INTERVAL = 300L
 /**
  * 避免快速点击
  */
+@JvmOverloads
 fun MjRadioGroup.setOnItemShakeLessClickListener(
     clickInterval: Long = CLICK_INTERVAL,
     block: ((rb: RadioButton, position: Int) -> Unit)

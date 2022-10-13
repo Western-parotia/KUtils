@@ -81,6 +81,7 @@ fun <T : View> T.setOnShakeLessClickListener(
  * @param parentDeep 附着在第几层父级（注意自己层级）
  * @param sizePx     四周拓展大小
  */
+@JvmOverloads
 fun View.expandTouchArea(
     @IntRange(from = 1, to = 8) parentDeep: Int = 1,
     sizePx: Int = 10.dp
@@ -88,6 +89,7 @@ fun View.expandTouchArea(
     TouchUtils.expandTouchArea(this, parentDeep, sizePx)
 }
 
+@JvmOverloads
 fun View.expandTouchArea(
     parentView: View,
     sizePx: Int = 10.dp
@@ -98,6 +100,7 @@ fun View.expandTouchArea(
 /**
  * 拓展在可滑动view之下
  */
+@JvmOverloads
 fun View.expandTouchAreaForScrollingView(
     sizePx: Int = 10.dp
 ) {
@@ -218,6 +221,7 @@ fun View.setMarginOtherDefault(
  * 获取焦点，并清除其他view的焦点
  * @param hideInput true则顺便隐藏键盘
  */
+@JvmOverloads
 fun View.requestFocusAndClearOther(hideInput: Boolean = true) {
     rootView.findFocus()?.let {
         it.clearFocus()

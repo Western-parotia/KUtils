@@ -112,6 +112,7 @@ private const val CLICK_INTERVAL = 300L
  * @param block
  * @receiver
  */
+@JvmOverloads
 fun BaseQuickAdapter<*, *>.setOnItemShakeLessClickListener(
     clickInterval: Long = CLICK_INTERVAL,
     block: (view: View, position: Int) -> Unit

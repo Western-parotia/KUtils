@@ -17,6 +17,7 @@ package com.foundation.widget.utils.ext.global
  * @param empty 空数据返回true还是false
  * @param predicate 回调
  */
+@JvmOverloads
 inline fun <T> Iterable<T>?.allTrue(empty: Boolean = false, predicate: (T) -> Boolean): Boolean {
     if (this == null || (this is Collection && isEmpty())) {
         return empty
@@ -25,6 +26,7 @@ inline fun <T> Iterable<T>?.allTrue(empty: Boolean = false, predicate: (T) -> Bo
     return true
 }
 
+@JvmOverloads
 inline fun <T> Array<T>?.allTrue(empty: Boolean = false, predicate: (T) -> Boolean): Boolean {
     if (isNullOrEmpty()) {
         return empty
@@ -48,6 +50,7 @@ inline fun <T> Iterable<T>?.oneTrue(empty: Boolean = false, predicate: (T) -> Bo
     return false
 }
 
+@JvmOverloads
 inline fun <T> Array<T>?.oneTrue(empty: Boolean = false, predicate: (T) -> Boolean): Boolean {
     if (isNullOrEmpty()) {
         return empty

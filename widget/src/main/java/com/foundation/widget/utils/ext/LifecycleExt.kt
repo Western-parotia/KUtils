@@ -11,6 +11,7 @@ import com.foundation.widget.utils.ext.global.postMain
  *                      false：默认效果，之前的生命周期都会收到
  *                      true：之前的都忽略，只有之后的
  */
+@JvmOverloads
 @MainThread
 fun Lifecycle.addObserver(
     ignoreBefore: Boolean = false,

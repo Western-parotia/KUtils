@@ -3,8 +3,14 @@ package com.foundation.widget.utils.ext.view
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+private val dlpMethod = run {
+    val method = ViewGroup::class.java.getDeclaredMethod("generateDefaultLayoutParams")
+    method.isAccessible = true
+    return@run method
+}
+
 /**
- * generateDefaultLayoutParams是protected的，所以有此拓展
+ * [ViewGroup.generateDefaultLayoutParams]是protected的，所以有此拓展
  */
 fun ViewGroup.getDefLayoutParams(): ViewGroupLayoutParams {
     return if (this is RecyclerView) {
@@ -13,8 +19,6 @@ fun ViewGroup.getDefLayoutParams(): ViewGroupLayoutParams {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     } else {
-        val method = this.javaClass.getDeclaredMethod("generateDefaultLayoutParams")
-        method.isAccessible = true
-        method.invoke(this) as ViewGroupLayoutParams
+        dlpMethod.invoke(this) as ViewGroupLayoutParams
     }
 }
