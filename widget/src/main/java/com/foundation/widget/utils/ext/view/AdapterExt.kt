@@ -174,9 +174,11 @@ fun BaseQuickAdapter<*, *>.removeList(listPosition: Int) {
 /**
  * 修改选中状态
  */
-fun <T : ISelectedListBean> ViewBindingQuickAdapter<*, T>.setSelectedPosition(listPosition: Int) {
-    val oldPosition = data.selectedPosition
-    data.selectedPosition = listPosition
-    notifyListItemChanged(oldPosition)
-    notifyListItemChanged(listPosition)
-}
+var <T : ISelectedListBean> ViewBindingQuickAdapter<*, T>.selectedPosition
+    get() = data.selectedPosition
+    set(value) {
+        val oldPosition = data.selectedPosition
+        data.selectedPosition = value
+        notifyListItemChanged(oldPosition)
+        notifyListItemChanged(value)
+    }
