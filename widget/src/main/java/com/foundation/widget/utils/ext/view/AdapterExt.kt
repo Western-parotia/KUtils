@@ -2,8 +2,11 @@ package com.foundation.widget.utils.ext.view
 
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
 import com.foundation.widget.utils.R
+import com.foundation.widget.utils.bean.ISelectedListBean
+import com.foundation.widget.utils.bean.selectedPosition
 
 /**
  * 加了tag，方便使用
@@ -166,4 +169,14 @@ fun BaseQuickAdapter<*, *>.removeList(listPosition: Int) {
         return
     }
     remove(listPosition + headerLayoutCount)
+}
+
+/**
+ * 修改选中状态
+ */
+fun <T : ISelectedListBean> ViewBindingQuickAdapter<*, T>.setSelectedPosition(listPosition: Int) {
+    val oldPosition = data.selectedPosition
+    data.selectedPosition = listPosition
+    notifyListItemChanged(oldPosition)
+    notifyListItemChanged(listPosition)
 }
