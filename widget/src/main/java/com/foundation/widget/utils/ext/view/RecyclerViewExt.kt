@@ -4,6 +4,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.foundation.widget.utils.R
+import com.foundation.widget.utils.decoration.SpacesItemDecoration
 import com.foundation.widget.utils.ext.global.dp
 import kotlin.math.abs
 
@@ -52,4 +53,24 @@ fun RecyclerView.setOnClickListenerByTouch(listener: View.OnClickListener?) {
     }
     addOnItemTouchListener(newListener)
     setTag(R.id.tag_rv_click, newListener)
+}
+
+/**
+ * 如果class相等则删除旧的（主要用于复用里的rv）
+ * [SpacesItemDecoration]
+ */
+fun RecyclerView.replaceItemDecorationWithClass(decor: RecyclerView.ItemDecoration) {
+    if (itemDecorationCount > 0) {
+        ((itemDecorationCount - 1)..0).forEach {
+            val oldDecor = getItemDecorationAt(it)
+            if (oldDecor == decor) {
+                //完全相等就不需要重复设置了
+                return
+            }
+            if (oldDecor.javaClass == decor.javaClass) {
+                removeItemDecorationAt(it)
+            }
+        }
+    }
+    addItemDecoration(decor)
 }
