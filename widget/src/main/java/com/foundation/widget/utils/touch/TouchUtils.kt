@@ -57,8 +57,8 @@ object TouchUtils {
         }
         var parentView = expandView
         while (true) {
-            val p = parentView.parent as View
-            when (p) {
+            parentView = parentView.parent as View
+            when (parentView) {
                 //到可滑动的view停止
                 is ScrollingView, is ScrollView, is HorizontalScrollView, is AdapterView<*>, is ViewPager, is ViewPager2 -> {
                     expandTouchArea(expandView, parentView, sizePx)
@@ -66,13 +66,12 @@ object TouchUtils {
                 }
                 else -> {
                     //或者到最外层view停止（一般是没有add）
-                    if (p.parent !is View) {
+                    if (parentView.parent !is View) {
                         expandTouchArea(expandView, parentView, sizePx)
                         return
                     }
                 }
             }
-            parentView = p
         }
     }
 
