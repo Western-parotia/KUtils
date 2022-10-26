@@ -44,6 +44,9 @@ object TouchUtils {
         expandTouchArea(expandView, parentView, sizePx)
     }
 
+    /**
+     * 拓展在可滑动view之下（或者到最外层view停止）
+     */
     @JvmOverloads
     fun expandTouchAreaForScrollingView(
         expandView: View,
@@ -56,12 +59,17 @@ object TouchUtils {
         while (true) {
             val p = parentView.parent as View
             when (p) {
+                //到可滑动的view停止
                 is ScrollingView, is ScrollView, is HorizontalScrollView, is AdapterView<*>, is ViewPager, is ViewPager2 -> {
-                    if (parentView == expandView) {
-                        throw IllegalArgumentException("parent就是滑动view，无法拓展")
-                    }
                     expandTouchArea(expandView, parentView, sizePx)
                     return
+                }
+                else -> {
+                    //或者到最外层view停止（一般是没有add）
+                    if (p.parent !is View) {
+                        expandTouchArea(expandView, parentView, sizePx)
+                        return
+                    }
                 }
             }
             parentView = p
@@ -74,6 +82,9 @@ object TouchUtils {
         parentView: View,
         sizePx: Int = 10.dp
     ) {
+        if (parentView == expandView) {
+            throw IllegalArgumentException("parent就是自己，无法拓展")
+        }
         if (sizePx <= 0) {
             return
         }

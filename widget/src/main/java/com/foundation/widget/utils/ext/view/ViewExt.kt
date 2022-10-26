@@ -98,7 +98,7 @@ fun View.expandTouchArea(
 }
 
 /**
- * 拓展在可滑动view之下
+ * 拓展在可滑动view之下（或者到最外层view停止）
  */
 @JvmOverloads
 fun View.expandTouchAreaForScrollingView(
