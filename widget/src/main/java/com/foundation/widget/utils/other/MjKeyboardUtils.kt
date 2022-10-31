@@ -1,4 +1,4 @@
-package com.foundation.widget.utils
+package com.foundation.widget.utils.other
 
 import android.app.Activity
 import android.graphics.Rect
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.foundation.widget.utils.R
 
 object MjKeyboardUtils {
     /**

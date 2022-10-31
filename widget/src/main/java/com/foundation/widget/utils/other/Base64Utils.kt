@@ -1,4 +1,4 @@
-package com.foundation.widget.utils
+package com.foundation.widget.utils.other
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

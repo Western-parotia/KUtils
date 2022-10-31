@@ -2,12 +2,12 @@ package com.foundation.widget.utils.ext.view
 
 import android.content.Intent
 import android.os.Bundle
-import com.foundation.widget.utils.MjKeyboardUtils
 import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.doOnCreated
 import com.foundation.widget.utils.ext.doOnDestroyed
 import com.foundation.widget.utils.ext.doOnNextResumed
 import com.foundation.widget.utils.ext.doOnResumed
+import com.foundation.widget.utils.other.MjKeyboardUtils
 import com.foundation.widget.utils.ui.IUIContext
 
 /**

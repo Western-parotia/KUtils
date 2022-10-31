@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.foundation.widget.utils.MjThreadUtils
+import com.foundation.widget.utils.other.MjThreadUtils
 
 /**
  * 子线程post，主线程直接set

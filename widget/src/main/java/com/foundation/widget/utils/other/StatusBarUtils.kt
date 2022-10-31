@@ -1,8 +1,9 @@
-package com.foundation.widget.utils
+package com.foundation.widget.utils.other
 
 import android.app.Activity
 import android.os.Build
 import android.view.View
+import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.global.dp
 
 /**

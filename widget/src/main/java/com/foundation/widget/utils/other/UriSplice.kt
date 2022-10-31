@@ -1,4 +1,4 @@
-package com.foundation.widget.utils
+package com.foundation.widget.utils.other
 
 import android.net.Uri
 import androidx.collection.ArraySet

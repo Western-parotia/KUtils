@@ -1,4 +1,4 @@
-package com.foundation.widget.utils
+package com.foundation.widget.utils.other
 
 import androidx.annotation.IntRange
 import com.foundation.widget.utils.ext.global.postMain

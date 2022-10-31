@@ -45,7 +45,7 @@ object TouchUtils {
     }
 
     /**
-     * 拓展在可滑动view之下（或者到最外层view停止）
+     * 拓展在可滑动view之下（没有则拓展到最外层view上）
      */
     @JvmOverloads
     fun expandTouchAreaForScrollingView(

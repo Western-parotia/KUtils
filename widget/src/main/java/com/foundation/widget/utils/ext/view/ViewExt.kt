@@ -18,9 +18,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.foundation.widget.utils.MjKeyboardUtils
 import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.global.dp
+import com.foundation.widget.utils.other.MjKeyboardUtils
 import com.foundation.widget.utils.touch.TouchUtils
 import com.google.android.flexbox.FlexboxLayoutManager
 
@@ -98,7 +98,7 @@ fun View.expandTouchArea(
 }
 
 /**
- * 拓展在可滑动view之下（或者到最外层view停止）
+ * 拓展在可滑动view之下（没有则拓展到最外层view上）
  */
 @JvmOverloads
 fun View.expandTouchAreaForScrollingView(
