@@ -25,7 +25,7 @@ object MjUtils {
             }
 
             //如果没有设置debug状态，将尝试反射获取
-            if (_app != null) {
+            if (isInit) {
                 try {
                     val bcCls = Class.forName("${app.packageName}.BuildConfig")
                     val bcField = bcCls.getField("DEBUG")
