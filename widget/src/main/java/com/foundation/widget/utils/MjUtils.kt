@@ -15,6 +15,9 @@ object MjUtils {
 
     val app get() = _app ?: throw UninitializedPropertyAccessException("未调用init")
 
+    val isInit: Boolean
+        get() = _app != null
+
     val isDebug: Boolean
         get() {
             _isDebug?.let {
