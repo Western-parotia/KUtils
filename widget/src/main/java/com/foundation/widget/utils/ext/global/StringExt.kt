@@ -107,6 +107,11 @@ fun CharSequence?.toSafeDouble(newScale: Int = -1): Double {
 fun String.addRmb() = "¥$this"
 
 /**
+ * -¥11.11
+ */
+fun String.addSubRmb() = "-¥$this"
+
+/**
  * 是否以http开头
  */
 fun String?.isHttp() = this?.startsWith("http") ?: false
