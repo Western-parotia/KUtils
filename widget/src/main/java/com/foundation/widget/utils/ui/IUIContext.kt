@@ -87,11 +87,11 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
     class ActivityUIContextWrapper(private val ui: FragmentActivity) : IUIContext {
-        override val isFinished = ui.isFinishing
+        override val isFinished get() = ui.isFinishing
         override fun getActivity() = ui
-        override val currentFragmentManager = ui.supportFragmentManager
-        override val rootView = ui.window?.decorView
-        override val delegate = ui
+        override val currentFragmentManager get() = ui.supportFragmentManager
+        override val rootView get() = ui.window?.decorView
+        override val delegate get() = ui
 
         /**
          * view同Activity的生命周期
@@ -128,11 +128,11 @@ interface IUIContext : LifecycleOwner, ViewModelStoreOwner, ActivityResultCaller
     }
 
     class FragmentUIContextWrapper(private val ui: Fragment) : IUIContext {
-        override val isFinished = !ui.isAdded
+        override val isFinished get() = !ui.isAdded
         override fun getActivity() = ui.activity
-        override val currentFragmentManager = ui.childFragmentManager
-        override val rootView = ui.view
-        override val delegate = ui
+        override val currentFragmentManager get() = ui.childFragmentManager
+        override val rootView get() = ui.view
+        override val delegate get() = ui
 
         override fun requireViewLifecycle() = ui.viewLifecycleOwner.lifecycle
 
