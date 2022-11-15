@@ -10,4 +10,6 @@
     <item name="tag_rv_click" type="id" />
     <!--textChanged回调（主要用于adapter）-->
     <item name="tag_text_changed_listener" type="id" />
+    <!--Anim对象暂存，方便cancel-->
+    <item name="tag_anim" type="id" />
 </resources>
