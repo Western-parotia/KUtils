@@ -58,16 +58,17 @@ var TextView.textSizePx: Int
 
 /**
  * 设置字体加粗，和xml效果一致
+ * 注意：之前版本“Typeface.create(typeface, Typeface.BOLD)”有细微bug（部分手机加粗效果不一致、无法取消加粗）
+ *       暂时直接设置成默认字体样式，如果后期有用到自定义字体，则这里需要调整
  */
 var TextView.isTextBold: Boolean
     set(value) {
         if (value) {
-            setTypeface(Typeface.create(typeface, Typeface.BOLD), Typeface.BOLD)
-            invalidate()
+            setTypeface(Typeface.DEFAULT_BOLD, Typeface.NORMAL)
         } else {
-            setTypeface(Typeface.create(typeface, Typeface.NORMAL), Typeface.NORMAL)
-            invalidate()
+            setTypeface(Typeface.DEFAULT, Typeface.NORMAL)
         }
+        invalidate()
     }
     get() = typeface?.isBold ?: false
 
