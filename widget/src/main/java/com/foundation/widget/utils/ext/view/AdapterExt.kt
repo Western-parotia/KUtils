@@ -108,22 +108,25 @@ fun BaseQuickAdapter<*, *>.setOnItemChildLongClickWithTagListener(
 private const val CLICK_INTERVAL = 300L
 
 /**
- * 避免快速点击
- * @param block
+ * 避免快速点击注意区分代码
+ * @param isDistinguishPosition 是否区分position，如果是true则不同position可连续点击
  * @receiver
  */
 @JvmOverloads
 fun BaseQuickAdapter<*, *>.setOnItemShakeLessClickListener(
+    isDistinguishPosition: Boolean = false,
     clickInterval: Long = CLICK_INTERVAL,
     block: (view: View, position: Int) -> Unit
 ) {
     var timestamp = System.currentTimeMillis()
+    var lastClickPosition = -1
     setOnItemClickListener { _, view, position ->
         val interval = System.currentTimeMillis() - timestamp
-        if (interval >= clickInterval) {
+        if (interval >= clickInterval || (isDistinguishPosition && lastClickPosition != position)) {
             block(view, position)
         }
         timestamp = System.currentTimeMillis()
+        lastClickPosition = position
     }
 
 }
