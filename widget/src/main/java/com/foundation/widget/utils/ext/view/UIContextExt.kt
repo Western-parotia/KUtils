@@ -2,6 +2,8 @@ package com.foundation.widget.utils.ext.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.ext.doOnCreated
 import com.foundation.widget.utils.ext.doOnDestroyed
@@ -9,6 +11,7 @@ import com.foundation.widget.utils.ext.doOnNextResumed
 import com.foundation.widget.utils.ext.doOnResumed
 import com.foundation.widget.utils.other.MjKeyboardUtils
 import com.foundation.widget.utils.ui.IUIContext
+import com.foundation.widget.utils.ui.UILazyDelegate
 
 /**
  * 关掉当前页面（fragment则关掉对应Activity）
@@ -107,3 +110,12 @@ inline fun <reified T> IUIContext.jumpToActivity(params: (Intent.() -> Unit) = {
  */
 val IUIContext.requireActivity
     get() = activity ?: throw IllegalStateException("this $this not attached to an activity.")
+
+/**
+ * 根据生命周期自动管理初始化
+ */
+fun <T> IUIContext.lazyWithUI(initializer: () -> T) = UILazyDelegate(this, initializer)
+
+inline fun <reified VM : ViewModel> IUIContext.lazyUIVM(): Lazy<VM> {
+    return lazyWithUI { ViewModelProvider(this).get(VM::class.java) }
+}
