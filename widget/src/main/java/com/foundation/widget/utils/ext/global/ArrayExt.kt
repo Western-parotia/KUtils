@@ -63,7 +63,7 @@ val Collection<*>.downIndices: IntProgression
     get() = size - 1 downTo 0
 
 /**
- * 安全的遍历删除，倒序
+ * 遍历删除，倒序
  */
 inline fun <T> MutableList<T>?.removeIfReverseSequence(filter: (index: Int, item: T) -> Boolean) {
     this?.let {
@@ -76,7 +76,7 @@ inline fun <T> MutableList<T>?.removeIfReverseSequence(filter: (index: Int, item
 }
 
 /**
- * 安全的遍历删除，迭代器正序
+ * 遍历删除，迭代器正序
  */
 inline fun <T> MutableCollection<T>?.removeIfIterator(filter: (item: T) -> Boolean) {
     this?.let {
@@ -88,6 +88,23 @@ inline fun <T> MutableCollection<T>?.removeIfIterator(filter: (item: T) -> Boole
             }
         }
     }
+}
+
+/**
+ * 只删除第一个，并返回该值
+ */
+inline fun <T> MutableCollection<T>?.removeFirst(filter: (item: T) -> Boolean): T? {
+    this?.let {
+        val iterator = iterator()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            if (filter(next)) {
+                iterator.remove()
+                return next
+            }
+        }
+    }
+    return null
 }
 
 /**
