@@ -87,3 +87,20 @@ fun postMainDelayedLifecycle(
     }
     globalHandler.postDelayedLifecycle(owner, mills, run)
 }
+
+/**
+ * 用于延迟执行某个后台任务
+ */
+fun postMainOnIdle(mills: Long = 0, run: () -> Unit) {
+    val r = Runnable {
+        Looper.myQueue().addIdleHandler {
+            run.invoke()
+            false
+        }
+    }
+    if (mills <= 0) {
+        postMainSmart(r)
+    } else {
+        postMainDelayed(mills, run = r)
+    }
+}
