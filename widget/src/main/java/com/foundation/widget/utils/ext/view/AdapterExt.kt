@@ -18,27 +18,19 @@ fun BaseQuickAdapter<*, *>.dispatchItemChildClick(
 ) {
     view.setTag(R.id.tag_adapter_view_holder, holder)
     view.setTag(R.id.tag_adapter_child_view_click, tag)
-    onItemChildClickListener?.onItemChildClick(
-        holder.bindingAdapter as? BaseQuickAdapter<*, *>,
-        view,
-        holder.getListPosition()
-    )
+    onItemChildClickListener?.onItemChildClick(this, view, holder.getListPosition())
 }
 
 fun BaseQuickAdapter<*, *>.dispatchItemChildLongClick(
     view: View,
     holder: ViewBindingViewHolder<*>,
     tag: String
-) {
+): Boolean {
     view.setTag(R.id.tag_adapter_view_holder, holder)
     view.setTag(R.id.tag_adapter_child_view_long_click, tag)
-    onItemChildLongClickListener?.onItemChildLongClick(
-        holder.bindingAdapter as? BaseQuickAdapter<*, *>,
-        view,
-        holder.getListPosition()
-    )
+    return onItemChildLongClickListener?.onItemChildLongClick(this, view, holder.getListPosition())
+        ?: false
 }
-
 
 /**
  * 点击事件也不写了
@@ -48,32 +40,18 @@ fun BaseQuickAdapter<*, *>.setItemChildTagClick(
     holder: ViewBindingViewHolder<*>,
     tag: String
 ) {
-    view.setTag(R.id.tag_adapter_view_holder, holder)
-    view.setTag(R.id.tag_adapter_child_view_click, tag)
     view.setOnShakeLessClickListener {
-        onItemChildClickListener?.onItemChildClick(
-            holder.bindingAdapter as? BaseQuickAdapter<*, *>,
-            view,
-            holder.getListPosition()
-        )
+        dispatchItemChildClick(view, holder, tag)
     }
 }
-
 
 fun BaseQuickAdapter<*, *>.setItemChildTagLongClick(
     view: View,
     holder: ViewBindingViewHolder<*>,
     tag: String
 ) {
-    view.setTag(R.id.tag_adapter_view_holder, holder)
-    view.setTag(R.id.tag_adapter_child_view_long_click, tag)
     view.setOnLongClickListener {
-        onItemChildLongClickListener?.onItemChildLongClick(
-            holder.bindingAdapter as? BaseQuickAdapter<*, *>,
-            view,
-            holder.getListPosition()
-        )
-        return@setOnLongClickListener true
+        dispatchItemChildLongClick(view, holder, tag)
     }
 }
 
