@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
+import com.foundation.widget.utils.MjUtils
 import com.foundation.widget.utils.R
 import com.foundation.widget.utils.bean.ISelectedListBean
 import com.foundation.widget.utils.bean.selectedPosition
@@ -194,6 +195,13 @@ fun <T> RecyclerView.Adapter<*>.setNewDiffData(
     offsetCount: Int = 0,
     rv: RecyclerView? = null,
 ) {
+    if (targetList == newList) {
+        if (MjUtils.isDebug) {
+            throw IllegalArgumentException("两个list相同无法对比差异")
+        }
+        notifyDataSetChanged()
+        return
+    }
     val oldList = targetList.toList()
     targetList.clear()
     targetList.addAll(newList)
