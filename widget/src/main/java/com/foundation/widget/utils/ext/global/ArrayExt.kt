@@ -129,29 +129,3 @@ inline fun <T> Array<out T>?.contains(predicate: (T) -> Boolean): Boolean {
  * 根据回调判断是否包含，和[oneTrue]一个逻辑，所以直接调用
  */
 inline fun <T> Iterable<T>?.contains(predicate: (T) -> Boolean) = oneTrue(predicate = predicate)
-
-/**
- * 根据回调获取对应值
- * @param predicate 回调判断，true则返回此item
- */
-inline fun <T> Iterable<T>?.getOrNull(predicate: (T) -> Boolean): T? {
-    this?.forEach {
-        if (predicate(it)) {
-            return it
-        }
-    }
-    return null
-}
-
-/**
- * 根据回调获取对应值
- * @param predicate 回调判断，true则返回此item
- */
-inline fun <T> Array<T>?.getOrNull(predicate: (T) -> Boolean): T? {
-    this?.forEach {
-        if (predicate(it)) {
-            return it
-        }
-    }
-    return null
-}

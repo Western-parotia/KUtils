@@ -14,7 +14,6 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.foundation.widget.utils.R
-import com.foundation.widget.utils.ext.global.getOrNull
 import com.foundation.widget.utils.ext.global.removeIfIterator
 
 /**
@@ -34,11 +33,11 @@ fun TextView.setTextString(obj: Any?) {
         is StringBuilder, is StringBuffer -> {
             obj.toString()
         }
-        is CharSequence -> {
-            obj
-        }
         null, "null", "Null", "NULL" -> {
             ""
+        }
+        is CharSequence -> {
+            obj
         }
         else -> {
             obj.toString()
@@ -138,7 +137,7 @@ fun TextView.setTextEllipsize(
 var TextView.maxLength: Int
     set(value) {
         val oldMaxLength =
-            (filters.getOrNull { it is InputFilter.LengthFilter } as? InputFilter.LengthFilter)?.max
+            (filters?.firstOrNull { it is InputFilter.LengthFilter } as? InputFilter.LengthFilter)?.max
         if (oldMaxLength == value) {
             return
         }
