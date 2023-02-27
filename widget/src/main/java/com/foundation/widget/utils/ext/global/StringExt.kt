@@ -71,8 +71,13 @@ fun CharSequence?.toSafeInt(): Int {
 @JvmOverloads
 fun CharSequence?.toSafeDouble(newScale: Int = -1): Double {
     var st = this
-    if (st.isNullOrEmpty()) {
+    if (st.isNullOrBlank()) {
         return 0.0
+    }
+    when (st) {
+        null, "null", "Null", "NULL", "" -> {
+            return 0.0
+        }
     }
     when {
         st.endsWith(".") -> {
