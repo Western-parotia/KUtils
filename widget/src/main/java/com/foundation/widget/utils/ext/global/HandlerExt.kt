@@ -37,14 +37,11 @@ fun removeGlobalRunnable(runnable: Runnable) {
 }
 
 /**
- * @param deduplication 去重
  * @param run 必须显示指定为Runnable类：Runnable {xxx}
  */
-@JvmOverloads
-fun postMain(deduplication: Boolean = true, run: Runnable) {
-    if (deduplication) {
-        globalHandler.removeCallbacks(run)
-    }
+fun postMain(run: Runnable) {
+    //默认去重
+    removeGlobalRunnable(run)
     globalHandler.post(run)
 }
 
@@ -52,6 +49,8 @@ fun postMain(deduplication: Boolean = true, run: Runnable) {
  * 子线程会post，主线程则直接调用
  */
 fun postMainSmart(run: Runnable) {
+    //默认去重
+    removeGlobalRunnable(run)
     if (Looper.myLooper() == Looper.getMainLooper()) {
         run.run()
     } else {
@@ -60,38 +59,42 @@ fun postMainSmart(run: Runnable) {
 }
 
 /**
- * 注意：无生命周期，自动移除见[postMainDelayedLifecycle]
- * @param deduplication 是否去重
+ * inline版实现
  */
-@JvmOverloads
-fun postMainDelayed(mills: Long, deduplication: Boolean = true, run: Runnable) {
-    if (deduplication) {
-        removeGlobalRunnable(run)
+inline fun postMainSmart(crossinline call: () -> Unit) {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+        call.invoke()
+    } else {
+        postMain { call.invoke() }
     }
+}
+
+/**
+ * 注意：无生命周期，自动移除见[postMainDelayedLifecycle]
+ */
+fun postMainDelayed(mills: Long, run: Runnable) {
+    //默认去重
+    removeGlobalRunnable(run)
     globalHandler.postDelayed(mills, run)
 }
 
 /**
  * destroy时自动移除
- * @param deduplication 是否去重
  */
-@JvmOverloads
 fun postMainDelayedLifecycle(
     owner: LifecycleOwner,
     mills: Long,
-    deduplication: Boolean = true,
     run: Runnable
 ) {
-    if (deduplication) {
-        removeGlobalRunnable(run)
-    }
+    //默认去重
+    removeGlobalRunnable(run)
     globalHandler.postDelayedLifecycle(owner, mills, run)
 }
 
 /**
  * 用于延迟执行某个后台任务
  */
-fun postMainOnIdle(mills: Long = 0, run: () -> Unit) {
+inline fun postMainOnIdle(mills: Long = 0, crossinline run: () -> Unit) {
     val r = Runnable {
         Looper.myQueue().addIdleHandler {
             run.invoke()
