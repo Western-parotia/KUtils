@@ -48,18 +48,19 @@ fun CharSequence?.clipboardAndToast(toastText: CharSequence = "已复制到剪�
 /**
  * 会丢弃小数点，不会崩溃
  */
-fun CharSequence?.toSafeInt(): Int {
-    when (this) {
+@JvmOverloads
+fun CharSequence?.toSafeInt(defValue: Int = 0): Int {
+    return when (this) {
         null, "null", "Null", "NULL", "" -> {
-            return 0
+            defValue
         }
         else -> {
             try {
-                return split(".")[0].toInt()
+                split(".")[0].toInt()
             } catch (e: Exception) {
                 e.printStackTrace()
+                defValue
             }
-            return 0
         }
     }
 }
@@ -69,14 +70,14 @@ fun CharSequence?.toSafeInt(): Int {
  * @param newScale 精度，直接删掉（方便去掉多余小数）
  */
 @JvmOverloads
-fun CharSequence?.toSafeDouble(newScale: Int = -1): Double {
+fun CharSequence?.toSafeDouble(newScale: Int = -1, defValue: Double = 0.0): Double {
     var st = this
     if (st.isNullOrBlank()) {
-        return 0.0
+        return defValue
     }
     when (st) {
         null, "null", "Null", "NULL", "" -> {
-            return 0.0
+            return defValue
         }
     }
     when {
@@ -102,7 +103,7 @@ fun CharSequence?.toSafeDouble(newScale: Int = -1): Double {
         return st.toString().toDouble()
     } catch (e: Exception) {
         e.printStackTrace()
-        return 0.0
+        return defValue
     }
 }
 
