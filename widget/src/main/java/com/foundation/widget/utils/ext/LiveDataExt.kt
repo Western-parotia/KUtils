@@ -29,6 +29,6 @@ fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, obs: (T) -> Unit): Observ
         }
 
     }
-    this.observe(owner, obs)
+    this.observe(owner, o)
     return o
 }
