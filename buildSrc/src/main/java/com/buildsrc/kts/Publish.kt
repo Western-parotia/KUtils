@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object Publish {
-    private const val VERSION = "1.0.3"
-    const val SNAPSHOT = true
+    private const val VERSION = "1.0.4"
+    const val SNAPSHOT = false
     private const val ARTIFACT_ID = "utils"
 
     object Version {
