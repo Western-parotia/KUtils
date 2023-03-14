@@ -13,7 +13,6 @@ object Dependencies {
         const val loadingView = "com.foundation.widget:loadingview:1.1.9"
         const val recyclerviewAdapter =
             "com.foundation.widget:convenient-recyclerview-adapter:1.0.6"
-        const val radioGroup = "com.foundation.widget:radio-group:1.0.2"
     }
 
     object AndroidX {

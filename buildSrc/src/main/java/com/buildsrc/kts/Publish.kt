@@ -8,7 +8,7 @@ import java.util.*
 
 object Publish {
     private const val VERSION = "1.0.3"
-    const val SNAPSHOT = false
+    const val SNAPSHOT = true
     private const val ARTIFACT_ID = "utils"
 
     object Version {

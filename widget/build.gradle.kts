@@ -15,7 +15,6 @@ dependencies {
     implementation(Dependencies.AndroidX.appcompat)
     implementation(Dependencies.Material.material)
     implementation(Dependencies.Foundation.recyclerviewAdapter)
-    implementation(Dependencies.Foundation.radioGroup)
     implementation(Dependencies.OpenSourceLibrary.smartRefreshLayout)
     implementation(Dependencies.OpenSourceLibrary.smartRefreshLayoutHeader)
     implementation(Dependencies.OpenSourceLibrary.smartRefreshLayoutFooter)

@@ -4,5 +4,5 @@
 
 首先要配置腾讯云的maven，一般都有，不多说
 ```
-"com.foundation.widget:utils:1.0.3"
+"com.foundation.widget:utils:1.0.3-SNAPSHOT"
 ```
