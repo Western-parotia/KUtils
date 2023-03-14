@@ -35,6 +35,10 @@ object Dependencies {
         const val flexBox = "com.google.android:flexbox:2.0.1"
     }
 
+    object Google {
+        const val gson = "com.google.code.gson:gson:2.8.6"
+    }
+
     object Company {
 //        val json = "com.foundation.service:Json:${Publish.Version.versionName}"
     }

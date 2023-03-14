@@ -19,6 +19,7 @@ dependencies {
     implementation(Dependencies.OpenSourceLibrary.smartRefreshLayoutHeader)
     implementation(Dependencies.OpenSourceLibrary.smartRefreshLayoutFooter)
     implementation(Dependencies.OpenSourceLibrary.flexBox)
+    implementation(Dependencies.Google.gson)
 }
 
 android {
