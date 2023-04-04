@@ -81,16 +81,20 @@ object Publish {
          * 用于kotlin module做唯一标识
          */
         fun getFourPackage(projectDir: File): String {
+            println("projectDir:${projectDir.absolutePath}")
             try {
-                val javaFile = File(projectDir, "src\\main\\java")
+                val javaFile = File(projectDir, "src/main/java")
+                println("javaFile:${javaFile.absolutePath}")
                 if (javaFile.exists()) {
                     val child = javaFile.listFiles()[0].listFiles()[0].listFiles()[0].listFiles()[0]
+                    println("child:${child.absolutePath}")
                     //先删掉前段路径，然后转为.
                     return child.absolutePath.substring(javaFile.absolutePath.length + 1)
                         .replace("/", ".")
                         .replace("\\", ".")
                 }
             } catch (e: Exception) {
+                println("exception:$e")
                 e.printStackTrace()
             }
             throw  IllegalArgumentException("没有找到第四级包名")

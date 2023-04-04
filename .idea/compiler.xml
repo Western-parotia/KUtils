@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
+      <module name="KUtils.buildSrc" target="1.8" />
+      <module name="KUtils.buildSrc.main" target="1.8" />
+      <module name="KUtils.buildSrc.test" target="1.8" />
       <module name="Utils.buildSrc" target="1.8" />
       <module name="Utils.buildSrc.main" target="1.8" />
       <module name="Utils.buildSrc.test" target="1.8" />
