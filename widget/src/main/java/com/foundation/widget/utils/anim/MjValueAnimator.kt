@@ -288,7 +288,7 @@ class MjValueAnimator<T> private constructor(private val valueAnimator: ValueAni
     /**
      * 倒序播放
      */
-    fun reverse() {
+    override fun reverse() {
         valueAnimator.reverse()
     }
 }
