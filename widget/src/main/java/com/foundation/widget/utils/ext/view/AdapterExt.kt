@@ -80,8 +80,8 @@ fun BaseQuickAdapter<*, *>.setItemChildTagLongClick(
 /**
  * 配合上面，tag回调
  */
-fun BaseQuickAdapter<*, *>.setOnItemChildClickWithTagListener(
-    listener: (View, holder: ViewBindingViewHolder<*>, tag: String) -> Unit
+inline fun BaseQuickAdapter<*, *>.setOnItemChildClickWithTagListener(
+    crossinline listener: (View, holder: ViewBindingViewHolder<*>, tag: String) -> Unit
 ) {
     setOnItemChildClickListener { _, view, _ ->
         listener(
@@ -92,8 +92,8 @@ fun BaseQuickAdapter<*, *>.setOnItemChildClickWithTagListener(
     }
 }
 
-fun BaseQuickAdapter<*, *>.setOnItemChildLongClickWithTagListener(
-    listener: (View, holder: ViewBindingViewHolder<*>, tag: String) -> Unit
+inline fun BaseQuickAdapter<*, *>.setOnItemChildLongClickWithTagListener(
+    crossinline listener: (View, holder: ViewBindingViewHolder<*>, tag: String) -> Unit
 ) {
     setOnItemChildLongClickListener { _, view, _ ->
         listener(
@@ -105,7 +105,7 @@ fun BaseQuickAdapter<*, *>.setOnItemChildLongClickWithTagListener(
     }
 }
 
-private const val CLICK_INTERVAL = 300L
+const val CLICK_INTERVAL = 300L
 
 /**
  * 避免快速点击注意区分代码
@@ -113,10 +113,10 @@ private const val CLICK_INTERVAL = 300L
  * @receiver
  */
 @JvmOverloads
-fun BaseQuickAdapter<*, *>.setOnItemShakeLessClickListener(
+inline fun BaseQuickAdapter<*, *>.setOnItemShakeLessClickListener(
     isDistinguishPosition: Boolean = false,
     clickInterval: Long = CLICK_INTERVAL,
-    block: (view: View, position: Int) -> Unit
+    crossinline block: (view: View, position: Int) -> Unit
 ) {
     var timestamp = System.currentTimeMillis()
     var lastClickPosition = -1

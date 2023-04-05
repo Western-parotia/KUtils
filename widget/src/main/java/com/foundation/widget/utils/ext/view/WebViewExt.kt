@@ -1,5 +1,6 @@
 package com.foundation.widget.utils.ext.view
 
+import android.webkit.ValueCallback
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.lifecycle.LifecycleOwner
@@ -73,7 +74,7 @@ fun WebView.callJS(
     functionSt: String,
     vararg parameters: String,
     parametersEscape: Boolean = true,
-    resultCallback: ((resultSt: String) -> Unit)? = null
+    resultCallback: ValueCallback<String>? = null
 ) {
     val builder = StringBuilder()
     parameters.forEach {

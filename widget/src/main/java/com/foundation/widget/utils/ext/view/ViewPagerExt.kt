@@ -9,10 +9,10 @@ import androidx.viewpager2.widget.ViewPager2
 /**
  * 注册pager监听
  */
-fun ViewPager2.registerOnPageChangeCallback(
-    onScrolled: ((position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit)? = null,
-    onScrollStateChanged: ((state: Int) -> Unit)? = null,
-    onSelected: ((position: Int) -> Unit)? = null,
+inline fun ViewPager2.registerOnPageChangeCallback(
+    crossinline onScrolled: (position: Int, positionOffset: Float, positionOffsetPixels: Int) -> Unit = { _, _, _ -> },
+    crossinline onScrollStateChanged: (state: Int) -> Unit = { _ -> },
+    crossinline onSelected: (position: Int) -> Unit = { _ -> },
 ): ViewPager2.OnPageChangeCallback {
     val callback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
@@ -21,17 +21,17 @@ fun ViewPager2.registerOnPageChangeCallback(
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            onScrolled?.invoke(position, positionOffset, positionOffsetPixels)
+            onScrolled.invoke(position, positionOffset, positionOffsetPixels)
         }
 
         override fun onPageScrollStateChanged(state: Int) {
             super.onPageScrollStateChanged(state)
-            onScrollStateChanged?.invoke(state)
+            onScrollStateChanged.invoke(state)
         }
 
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            onSelected?.invoke(position)
+            onSelected.invoke(position)
         }
     }
     registerOnPageChangeCallback(callback)

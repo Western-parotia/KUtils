@@ -44,8 +44,6 @@ fun ViewGroup.getChildOrNull(index: Int) =
 
 val View.layoutInflater: LayoutInflater get() = LayoutInflater.from(context)
 
-private const val CLICK_INTERVAL = 300L
-
 /**
  * 默认没有margin，见[setMarginOtherDefault]
  */
@@ -58,9 +56,9 @@ private const val MARGIN_DEFAULT = Int.MIN_VALUE
  * @receiver
  */
 @JvmOverloads
-fun <T : View> T.setOnShakeLessClickListener(
+inline fun <T : View> T.setOnShakeLessClickListener(
     clickInterval: Long = CLICK_INTERVAL,
-    block: (T) -> Unit
+    crossinline block: (T) -> Unit
 ) {
     var timestamp = System.currentTimeMillis()
     setOnClickListener {

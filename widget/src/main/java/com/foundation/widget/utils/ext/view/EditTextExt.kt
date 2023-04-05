@@ -26,7 +26,7 @@ fun EditText.setTextAndSelection(text: CharSequence?) {
  *
  * 请自行在xml加上：android:imeOptions="actionSearch"
  */
-fun EditText.setOnSearchClickListener(listener: () -> Unit) {
+inline fun EditText.setOnSearchClickListener(crossinline listener: () -> Unit) {
     //标准写法
     setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
         //获得键盘中搜索的事件
