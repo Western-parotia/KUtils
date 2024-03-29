@@ -4,23 +4,10 @@ import com.buildsrc.kts.GlobalConfig
 //buildSrc的初始化init
 GlobalConfig.init(project)
 
-buildscript {//这里不支持import
-    repositories {
-        com.buildsrc.kts.Repositories.defRepositories(this)
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:4.1.3")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${com.buildsrc.kts.Dependencies.kotlinVersion}")
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        com.buildsrc.kts.Repositories.defRepositories(this)
-    }
+plugins {
+    id("com.android.application").version("8.0.1").apply(false)
+    id("com.android.library").version("8.0.1").apply(false)
+    id("org.jetbrains.kotlin.android").version("1.8.22").apply(false)
 }
 
 tasks.register("clean", Delete::class.java) {

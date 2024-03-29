@@ -23,33 +23,31 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(31)
+    namespace = Publish.Maven.getFourPackage(project.projectDir)
+    compileSdk = 33
 
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
-        versionCode(1)
-        versionName(Publish.Version.versionName)
+        minSdk = 21
         buildConfigField("String", "versionName", "\"${Publish.Version.versionName}\"")
         buildConfigField("String", "versionTimeStamp", "\"$versionTimestamp\"")
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_17)
+        targetCompatibility(JavaVersion.VERSION_17)
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
         freeCompilerArgs =
             freeCompilerArgs + arrayOf("-module-name", Publish.Maven.getFourPackage(projectDir))
     }
     viewBinding {
-        isEnabled = true
+        enable = true
     }
 }
 
 val sourceCodeTask: Jar = tasks.register("sourceCode", Jar::class.java) {
     from(android.sourceSets.getByName("main").java.srcDirs)
-    classifier = "sources"
+    archiveClassifier.set("sources")
 }
     .get()
 
